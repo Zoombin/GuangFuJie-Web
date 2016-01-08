@@ -29,7 +29,7 @@ $back_act='';
 $not_login_arr =
 array('login','act_login','register','act_register','act_edit_password','get_password','send_pwd_email','send_pwd_sms','password', 'signin', 'add_tag', 
     'collect', 'return_to_cart', 'logout', 'email_list', 'validate_email', 'send_hash_mail', 'order_query', 'is_registered', 'check_email','clear_history','qpassword_name', 
-    'get_passwd_question', 'check_answer', 'oath', 'oath_login');
+    'get_passwd_question', 'check_answer', 'oath', 'oath_login', 'send_pwd_mobile');
 
 /* 显示页面的action列表 */
 $ui_arr = array('register', 'login', 'profile', 'order_list', 'order_detail', 'order_tracking', 'address_list', 'act_edit_address', 'collection_list',
@@ -258,7 +258,8 @@ if ($action == 'register')
     }
     
     /* 短信发送设置 by carson */
-    if(intval($_CFG['sms_signin']) > 0){
+    // if(intval($_CFG['sms_signin']) > 0){
+    if(intval($_CFG['ecsdxt_mobile_reg']) > 0){
         $smarty->assign('enabled_sms_signin', 1);
     }
 
@@ -320,6 +321,44 @@ elseif ($action == 'act_register')
         }
 
 
+        if ($_CFG['ecsdxt_mobile_reg'] == '1')
+        {
+            $mobile = $username;//手机号
+            $verifycode = isset($_POST['mobile_code']) ? trim($_POST['mobile_code']) : '';//验证码
+            require_once(ROOT_PATH . 'include/lib_sms.php');
+            require_once(ROOT_PATH . 'lang/' .$_CFG['lang']. '/sms.php');
+
+            /* 提交的手机号是否正确 */
+            if(!ismobile($mobile)) {
+                show_message($_LANG['invalid_mobile_phone']);
+            }
+
+            /* 提交的验证码不能为空 */
+            if(empty($verifycode)) {
+                show_message($_LANG['verifycode_empty']);
+            }
+
+            /* 提交的验证码是否正确 */
+            if(empty($mobile)) {
+                show_message($_LANG['invalid_verify_code']);
+            }
+
+            /* 提交的手机号是否已经注册帐号 */
+            $sql = "SELECT COUNT(user_id) FROM " . $ecs->table('users') . " WHERE mobile_phone = '$mobile'";
+
+            if ($db->getOne($sql) > 0)
+            {
+                show_message($_LANG['mobile_phone_registered']);
+            }
+
+            /* 验证手机号验证码和IP */
+            $sql = "SELECT COUNT(id) FROM " . $ecs->table('verifycode') ." WHERE mobile='$mobile' AND verifycode='$verifycode' AND getip='" . real_ip() . "' AND status=1 AND dateline>'" . gmtime() ."'-86400";//验证码一天内有效
+
+            if ($db->getOne($sql) == 0)
+            {
+                show_message($_LANG['verifycode_mobile_phone_notmatch']);
+            }
+        }
 
         if (register($username, $password, $email, $other) !== false)
         {
@@ -429,7 +468,8 @@ elseif ($action == 'login')
     }
 
     /* 短信发送设置 by carson */
-    if(intval($_CFG['sms_signin']) > 0){
+    // if(intval($_CFG['sms_signin']) > 0){
+    if(intval($_CFG['ecsdxt_mobile_reg']) > 0){
         $smarty->assign('enabled_sms_signin', 1);
     }
 
@@ -742,7 +782,8 @@ elseif ($action == 'get_password')
     else
     {
         /* 短信发送设置 by carson */
-        if(intval($_CFG['sms_signin']) > 0){
+        // if(intval($_CFG['sms_signin']) > 0){
+        if(intval($_CFG['ecsdxt_mobile_reg']) > 0){
             $smarty->assign('enabled_sms_signin', 1);
         }
         //显示用户名和email表单
@@ -868,7 +909,7 @@ elseif ($action == 'send_pwd_email')
     }
 }
 
-/* 发送短信找回密码 */
+/* 发送短信找回密码 old*/
 elseif ($action == 'send_pwd_sms')
 {
     include_once(ROOT_PATH . 'include/lib_passport.php');
@@ -899,6 +940,95 @@ elseif ($action == 'send_pwd_sms')
     else
     {
         //不存在
+        show_message($_LANG['username_no_mobile'], $_LANG['back_page_up'], '', 'info');
+    }
+}
+
+/* 手机短信找回密码 */
+elseif ($action == 'send_pwd_mobile')
+{
+    require_once(ROOT_PATH . 'include/lib_sms.php');
+    require_once(ROOT_PATH . 'lang/' .$_CFG['lang']. '/sms.php');
+
+    if ($_CFG['ecsdxt_mobile_pwd'] == '0')
+        show_message($_LANG['ecsdxt_mobile_pwd_closed']);
+
+    include_once(ROOT_PATH . 'include/lib_passport.php');
+
+    /* 初始化会员用户名和手机 */
+    $mobile     = !empty($_POST['mobile'])     ? trim($_POST['mobile'])     : '';
+    $verifycode = !empty($_POST['mobile_code'])     ? trim($_POST['mobile_code'])     : '';
+
+    /* 提交的手机号是否正确 */
+    if(!ismobile($mobile)) {
+        show_message($_LANG['invalid_mobile_phone']);
+    }
+
+    /* 提交的验证码不能为空 */
+    if(empty($verifycode)) {
+        show_message($_LANG['verifycode_empty']);
+    }
+
+    /* 验证手机号验证码和IP */
+    $sql = "SELECT COUNT(id) FROM " . $ecs->table('verifycode') ." WHERE mobile='$mobile' AND verifycode='$verifycode' AND getip='" . real_ip() . "' AND status=6 AND dateline>'" . gmtime() ."'-86400";//验证码一天内有效
+
+    if ($db->getOne($sql) == 0)
+    {
+        show_message($_LANG['verifycode_mobile_phone_notmatch']);
+    }
+
+    /* 用户名和手机是否匹配 */
+    $sql = "SELECT COUNT(user_id) FROM " . $ecs->table('users') ." WHERE mobile_phone = '$mobile' and user_name = '$mobile'";
+
+    if ($db->getOne($sql) > 0)
+    {
+        /* 是否找回过密码 */
+        $sql = "SELECT COUNT(id) FROM " . $ecs->table('verifycode') ." WHERE status=3 AND getip='" . real_ip() . "' AND dateline>'" . gmtime() ."'-".$_CFG['ecsdxt_smsgap'];
+
+        if ($db->getOne($sql) > 0)
+        {
+            $message = sprintf($_LANG['send_pwd_mobile_excessived'], $_CFG['ecsdxt_smsgap']);
+            show_message($message, $_LANG['back_page_up'], '', 'info');
+        }
+
+        $new_password = getverifycode();
+
+        $smarty->assign('shop_name',    $_CFG['shop_name']);
+        $smarty->assign('user_name',    $mobile);
+        $smarty->assign('new_password', $new_password);
+
+        $content = $smarty->fetch('str:' . $_CFG['ecsdxt_mobile_pwd_value']);
+        
+        /* 发送注册手机短信验证 */
+        $ret = sendsms($mobile, $content);
+        
+        if($ret === true)
+        {
+            //插入获取验证码数据记录
+            $sql = "INSERT INTO " . $ecs->table('verifycode') . "(mobile, getip, verifycode, dateline, status) VALUES ('" . $mobile . "', '" . real_ip() . "', '$new_password', '" . gmtime() ."', 3)";
+            $db->query($sql);
+
+            if ($user->edit_user(array('username'=> $mobile, 'old_password'=>null, 'password'=>$new_password), 1))
+            {
+                $sql="UPDATE ".$ecs->table('users'). "SET `ec_salt`='0' WHERE user_name= '".$mobile."'";
+                $db->query($sql);
+
+                $user->logout();
+                show_message($_LANG['send_pwd_mobile_success'], $_LANG['relogin_lnk'], 'user.php?act=login', 'info');
+            }
+            else
+            {
+                show_message($_LANG['send_pwd_mobile_false'], $_LANG['back_page_up'], '', 'info');
+            }
+        }
+        else
+        {
+            show_message($_LANG['send_pwd_mobile_failured'] . $ret, $_LANG['back_page_up'], '', 'info');
+        }
+    }
+    else
+    {
+        //用户名与手机不匹配
         show_message($_LANG['username_no_mobile'], $_LANG['back_page_up'], '', 'info');
     }
 }

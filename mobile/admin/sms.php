@@ -15,8 +15,8 @@
 
 define('IN_ECTOUCH', true);
 
-require(dirname(__FILE__) . '/includes/init.php');
-require_once(ROOT_PATH . 'include/cls_sms.php');
+require(dirname(__FILE__) . '/include/init.php');
+require_once(ROOT_PATH . 'include/lib_sms.php');
 
 $action = isset($_REQUEST['act']) ? $_REQUEST['act'] : 'display_my_info';
 $sms = new sms();
@@ -108,6 +108,7 @@ switch ($action)
             }
             assign_query_info();
             $smarty->assign('send_rank',   $send_rank);
+            $smarty->assign('mobile_phone',   $_GET["mobile"]);
             $smarty->display('sms_send_ui.htm');
         }
         else
@@ -126,10 +127,16 @@ switch ($action)
 
         if(isset($send_num))
         {
-            $phone = $send_num.',';
+            $phone = $send_num;
         }
 
         $send_rank = isset($_POST['send_rank'])     ? $_POST['send_rank'] : 0;
+
+        $msg       = isset($_POST['msg'])       ? $_POST['msg']         : '';
+
+        $result = "";
+
+        require_once(ROOT_PATH . 'includes/lib_sms.php');
 
         if ($send_rank != 0)
         {
@@ -142,6 +149,7 @@ switch ($action)
                 while ($rank_rs = $db->fetch_array($row))
                 {
                     $value[] = $rank_rs['mobile_phone'];
+                    $result = sendsms($rank_rs['mobile_phone'], $msg);
                 }
             }
             else
@@ -164,20 +172,20 @@ switch ($action)
                 while ($rank_rs = $db->fetch_array($row))
                 {
                     $value[] = $rank_rs['mobile_phone'];
+                    $result = sendsms($rank_rs['mobile_phone'], $msg);
                 }
             }
             if(isset($value))
             {
                 $phone .= implode(',',$value);
             }
-        }       
-      
-        $msg       = isset($_POST['msg'])       ? $_POST['msg']         : '';
-        
+        } else {
+            $result = sendsms($phone, $msg);
+        }
 
-        $send_date = isset($_POST['send_date']) ? $_POST['send_date']   : '';   
+        //$send_date = isset($_POST['send_date']) ? $_POST['send_date']   : '';   
                
-        $result = $sms->send($phone, $msg, $send_date, $send_num = 13);
+        //$result = $sms->send($phone, $msg, $send_date, $send_num = 13);
 
         $link[] = array('text'  =>  $_LANG['back'] . $_LANG['03_sms_send'],
                         'href'  =>  'sms.php?act=display_send_ui');

@@ -39,7 +39,7 @@
           <form name="formLogin" action="user.php" method="post" onSubmit="return userLogin()">
             <dl>
               <dd>
-                <input placeholder="{$lang.username}/{$lang.mobile}/{$lang.email}" name="username" type="text"  class="inputBg" id="username" />
+                <input placeholder="请输入手机号码" name="username" type="text"  class="inputBg" id="username" />
               </dd>
             </dl>
             <dl>
@@ -91,7 +91,7 @@
                 <input placeholder="请输入验证码" class="inputBg" name="mobile_code" id="mobile_code" type="text" />
               </dd>
               <dd>
-              <input id="zphone" name="sendsms" type="button" value="获取手机验证码" onClick="sendSms();" class="c-btn3" />
+              <input id="zphone" name="sendsms" type="button" value="获取手机验证码" onClick="getverifycode1();" class="c-btn3" />
               </dd>
             </dl>
             <dl>
@@ -102,7 +102,7 @@
             <dl>
               <dd>
                 <input name="act" type="hidden" value="act_register" />
-                <input name="enabled_sms" type="hidden" value="1" />
+                <input name="enabled_sms" type="hidden" value="{$enabled_sms_signin}" />
                 <input type="hidden" name="back_act" value="{$back_act}" />
                 <input name="Submit" type="submit" value="下一步" class="c-btn3" />
               </dd>
@@ -190,7 +190,7 @@ jQuery(function($){
     <div id="tabBox1-bd"><!-- 添加id，js用到 -->
       <ul>
       	<!--{if $enabled_sms_signin eq 1} 支持手机短信功能-->
-      	<form  action="user.php" method="post" name="getPassword" onSubmit="return submitForget();">
+      	<form  action="user.php" method="post" name="getPasswordByMobile" onSubmit="return submitForget();">
           <input type="hidden" name="flag" id="flag" value="forget" />
           <div class="table_box">
             <dl>
@@ -208,7 +208,7 @@ jQuery(function($){
             </dl>
             <dl>
               <dd>
-                <input name="act" type="hidden" value="send_pwd_sms" />
+                <input name="act" type="hidden" value="send_pwd_mobile" />
                 <input name="Submit" type="submit" value="{$lang.submit}" class="c-btn3" />
               </dd>
             </dl>
