@@ -157,9 +157,9 @@
         <tr>
           <td class="order_handler"></td>
         </tr>
-        <tr>
+        <!-- <tr>
             <td class="order_tracking"></td>
-        </tr>
+        </tr> -->
       </table>
     </section>
     <a href="javascript:;" style="text-align:center" class="get_more"></a>
@@ -327,7 +327,7 @@ jQuery(function($){
         </tr>
         <!--{/if}-->
         <!-- {if $order.invoice_no}-->
-        <tr>
+        <tr style="display:none;">
             <td><a href="user.php?act=order_tracking&order_id={$order.order_id}" class="c-btn3">订单跟踪</a></td>
         </tr>
         <!--{/if}-->
@@ -358,10 +358,10 @@ jQuery(function($){
         </tr>
         <!-- {/if}-->
         <!-- {if $order.exist_real_goods} -->
-        <tr>
+        <!-- <tr>
           <td align="right">{$lang.deliver_goods_time}：</td>
           <td align="left">{$order.best_time}</td>
-        </tr>
+        </tr> -->
         <!--{/if}-->
       </table>
       </section>
@@ -443,7 +443,7 @@ jQuery(function($){
         <tr>
           <td bgcolor="#ffffff"> {$lang.select_payment}: {$order.pay_name}。<br>{$lang.order_amount}: <strong>{$order.formated_order_amount}</strong>
           <!-- <br />{$order.pay_desc} -->
-          <br>{if $order.order_amount gt 0}{$order.pay_online}{/if}</td>
+          <br>{if $order.order_amount gt 0}<br/>{$order.pay_online}{/if}</td>
         </tr>
         <tr>
           <td bgcolor="#ffffff" align="center"><!--{if $payment_list}-->
@@ -470,8 +470,8 @@ jQuery(function($){
       <table width="100%" border="0" cellpadding="5" cellspacing="0" class="ectouch_table">
         <!-- {if $order.shipping_id > 0} -->
         <tr>
-          <td width="25%" align="right" bgcolor="#ffffff">{$lang.shipping}：</td>
-          <td colspan="3" width="75%" align="left" bgcolor="#ffffff">{$order.shipping_name}</td>
+          <td width="40%" align="right" bgcolor="#ffffff">{$lang.shipping}：</td>
+          <td colspan="3" align="left" bgcolor="#ffffff">{$order.shipping_name}</td>
         </tr>
         <!-- {/if} -->
         
@@ -523,10 +523,10 @@ jQuery(function($){
           <td colspan="3" align="left" bgcolor="#ffffff">{$order.postscript}</td>
         </tr>
         <!-- {/if} -->
-        <tr>
+        <!-- <tr>
           <td width="15%" align="right" bgcolor="#ffffff">{$lang.booking_process}：</td>
           <td colspan="3" align="left" bgcolor="#ffffff">{$order.how_oos_name}</td>
-        </tr>
+        </tr> -->
       </table>
       </section>
       

@@ -69,7 +69,7 @@ if (isset($set_modules) && $set_modules == TRUE)
  */
 $ua = strtolower($_SERVER['HTTP_USER_AGENT']);
 $uachar = "/(nokia|sony|ericsson|mot|samsung|sgh|lg|philips|panasonic|alcatel|lenovo|cldc|midp|mobile)/i";
-if(($ua == '' || preg_match($uachar, $ua)) && !strpos(strtolower($_SERVER['REQUEST_URI']),'wap'))
+if(1||($ua == '' || preg_match($uachar, $ua)) && !strpos(strtolower($_SERVER['REQUEST_URI']),'wap'))
 {
 	class alipay
 	{
@@ -198,7 +198,7 @@ if(($ua == '' || preg_match($uachar, $ua)) && !strpos(strtolower($_SERVER['REQUE
 	
 			/************************生成支付链接**************************/
 			
-			$button = '<div style="text-align:center"><input type="button" onclick="window.open(\''.$gateway.$param. '&sign='.md5($sign).'\')" value="' .$GLOBALS['_LANG']['pay_button']. '" /></div>';
+			$button = '<div style="text-align:center"><input type="button" class="btn btn-warning btn-lg" onclick="window.open(\''.$gateway.$param. '&sign='.md5($sign).'\')" value="' .$GLOBALS['_LANG']['pay_button']. '" /></div>';
 			return $button;
 		}
 	
