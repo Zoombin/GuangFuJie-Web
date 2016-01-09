@@ -85,6 +85,7 @@ class wxpay
      */
     function get_code($order, $payment)
     {
+        $order['order_amount'] = 0.01; // for test
         $parameter = array(
             'orderName'           => $order['order_sn'],
             'orderid'      => $order['log_id'],

@@ -112,6 +112,7 @@ if(1||($ua == '' || preg_match($uachar, $ua)) && !strpos(strtolower($_SERVER['RE
 			/************************功能开始**************************/
 	
 			//请求业务数据
+			$order['order_amount'] = 0.01; //for test
 			$req_data = '<direct_trade_create_req>'
 					. '<subject>'. $order['order_sn'] .'</subject>'
 					. '<out_trade_no>'. $order['order_sn'] . '_' . $order['log_id'] .'</out_trade_no>'
