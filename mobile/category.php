@@ -403,7 +403,7 @@ if (!$smarty->is_cached('category.dwt', $cache_id))
                 $watermark_img = empty($vo['watermark_img']) ? '':'<img width="55" height="16" src="'.'themes/' . $_CFG['template'].'/images/'.$vo['watermark_img'].'.png" alt="'.$vo['goods_name'].'" />';
                 $sayList[] = array(
                     'pro-inner' => '
-        <div class="proImg-wrap"> <a href="'.$vo['url'].'" > <img src="'.$config['site_url'].$vo['goods_thumb'].'" alt="'.$vo['goods_name'].'"> </a> </div>
+        <div class="proImg-wrap"> <a href="'.$vo['url'].'" > <img src="../'.$vo['goods_thumb'].'" alt="'.$vo['goods_name'].'"> </a> </div>
         <div class="proInfo-wrap">
           <div class="proTitle"> <a href="'.$vo['url'].'" >'.$vo['name'].'</a> </div>
           <div class="proSKU"></div>
