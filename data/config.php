@@ -1,15 +1,22 @@
 <?php
 // database host
-$db_host   = "localhost:3306";
+$ip = $_SERVER['SERVER_ADDR'];
 
-// database name
-$db_name   = "guangfujie";
+if (isGuangFuServer($ip)) {
+        $db_host   = "localhost:3306";
+        $db_name   = "guangfujie";
+        $db_user   = "root";
+        $db_pass   = "Dsh12345";
+} else {
+        $db_host   = "localhost:3306";
+        $db_name   = "guangfujie";
+        $db_user   = "root";
+        $db_pass   = "";
+}
 
-// database username
-$db_user   = "root";
-
-// database password
-$db_pass   = "";
+function isGuangFuServer($ip) {
+    return $ip == '112.124.98.9';
+}
 
 // table prefix
 $prefix    = "ecs_";
