@@ -340,11 +340,15 @@ jQuery(function($){
           <td width="32%" align="right">{$lang.consignee_name}：</td>
           <td width="68%" align="left">{$order.consignee}</td>
         </tr>
-        <tr>
+        <!-- <tr>
           <td align="right">{$lang.email_address}：</td>
           <td align="left">{$order.email}</td>
-        </tr>
+        </tr> -->
         <!-- {if $order.exist_real_goods} -->
+        <tr>
+          <td align="right">{$lang.phone}：</td>
+          <td align="left">{$order.tel} </td>
+        </tr>
         <tr>
           <td align="right">{$lang.detailed_address}：</td>
           <td align="left">{$order.address} 
@@ -353,10 +357,6 @@ jQuery(function($){
             <!-- {/if} --></td>
         </tr>
         <!-- {/if}-->
-        <tr>
-          <td align="right">{$lang.phone}：</td>
-          <td align="left">{$order.tel} </td>
-        </tr>
         <!-- {if $order.exist_real_goods} -->
         <tr>
           <td align="right">{$lang.deliver_goods_time}：</td>
@@ -441,8 +441,9 @@ jQuery(function($){
       <section class="order_box padd1 radius10">
       <table width="100%" border="0" cellpadding="5" cellspacing="0" class="ectouch_table">
         <tr>
-          <td bgcolor="#ffffff"> {$lang.select_payment}: {$order.pay_name}。<br>{$lang.order_amount}: <strong>{$order.formated_order_amount}</strong><br />
-            {$order.pay_desc}<br>{if $order.order_amount gt 0}{$order.pay_online}{/if}</td>
+          <td bgcolor="#ffffff"> {$lang.select_payment}: {$order.pay_name}。<br>{$lang.order_amount}: <strong>{$order.formated_order_amount}</strong>
+          <!-- <br />{$order.pay_desc} -->
+          <br>{if $order.order_amount gt 0}{$order.pay_online}{/if}</td>
         </tr>
         <tr>
           <td bgcolor="#ffffff" align="center"><!--{if $payment_list}-->

@@ -1,5 +1,5 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<div class="filter" style="position:static; top:0px; width:100%;">
+<div class="filter" style="position:static; top:0px; width:100%;display:none;">
   <form method="GET" class="sort" name="listform">
     <ul class="filter-inner">
       <li class="{if $pager.sort == 'goods_id' && $pager.order == 'DESC'}filter-cur{/if}"> <a href="{$script_name}.php?category={$category}&display={$pager.display}&brand={$brand_id}&price_min={$price_min}&price_max={$price_max}&filter_attr={$filter_attr}&page={$pager.page}&sort=goods_id&order=DESC#goods_list">综合</a> </li>

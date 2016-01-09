@@ -78,16 +78,18 @@
           <!-- {/if} -->
           <div class="b"> <em class="price">{$goods.goods_price}</em> <span style="jianju">x </span> <span class="txt"> 
             <!-- {if $goods.goods_id gt 0 && $goods.is_gift eq 0 && $goods.parent_id eq 0} 普通商品可修改数量 -->
-            <input class="inputBg" type="number" min="1" max="1000" name="goods_number[{$goods.rec_id}]" id="goods_number_{$goods.rec_id}" value="{$goods.goods_number}" size="4"   onkeyup="changenum({$goods.rec_id})"/>
+            <input class="inputBg" type="number" min="1" max="1000" name="goods_number[{$goods.rec_id}]" id="goods_number_{$goods.rec_id}" value="{$goods.goods_number}" size="4"   onchange="changenum({$goods.rec_id})"/>
             {insert_scripts files='transport.js'} 
             <script>
 			function changenum(rec_id){
-			var goods_number = parseInt(document.getElementById('goods_number_'+rec_id).value);				  	   
+        console.log(122);
+			var goods_number = parseInt(document.getElementById('goods_number_'+rec_id).value);				  	   console.log(goods_number);
 			change_goods_number(rec_id,goods_number);
 			}
 			
 			function change_goods_number(rec_id, goods_number)
 			{   
+        console.log(rec_id);
 			Ajax.call('flow.php?step=ajax_update_cart', 'rec_id=' + rec_id +'&goods_number=' + goods_number, change_goods_number_response, 'POST','JSON');  
 			} 
 			
@@ -182,7 +184,7 @@
   <div class="empty-cart">
     <div class="ico_13 cart-logo"></div>
     <p class="message">没有宝贝哦，不如去添加宝贝</p>
-    <div class="flex"> <a class="c-btn2  flex_in radius5" href="index.php" style=" background:#6bd0a2"> <i class="ico_04_b"></i> 去购物 </a> <a class="c-btn2  flex_in radius5" href="user.php?act=collection_list" style=" margin-left:0.5rem"> 查看收藏夹</a> </div>
+    <div class="flex"> <a class="c-btn2  flex_in radius5" href="index.php" style=" background:#6bd0a2"> <i class="ico_04_b"></i> 去购物 </a> <!-- <a class="c-btn2  flex_in radius5" href="user.php?act=collection_list" style=" margin-left:0.5rem"> 查看收藏夹</a> --> </div>
   </div>
 </section>
 <!-- {/if} --> 
@@ -309,6 +311,7 @@ var pack = document.getElementsByName('pack');
                }
         }
          selectPack(oRadioValue );   
+          <!-- {if $allow_use_bonus} 是否使用红包 -->
 var bonus = document.getElementsByName('bonus');
  for (i=0;i<bonus.length;i++){
              if (bonus[i].checked){
@@ -316,7 +319,7 @@ var bonus = document.getElementsByName('bonus');
                }
         }
          changeBonus(oRadioValue ); 
-
+         <!-- {/if} 是否使用红包 -->
 
 
 var card = document.getElementsByName('card');
@@ -359,7 +362,7 @@ var card = document.getElementsByName('card');
               {$consignee.tel} <a href="flow.php?step=consignee" class="modify radius5">{$lang.modify}</a></dd>
           </dl>
           <dl>
-            <dd class="w50 b_no" >{$lang.detailed_address} {$consignee.address|escape} </dd>
+            <dd class="w50 b_no" >{$lang.detailed_address} <span class="f1">{$consignee.province_name|escape} {$consignee.city_name|escape} {$consignee.district_name|escape} {$consignee.address|escape}</span></dd>
           </dl>
         </div>
       </div>
@@ -368,15 +371,15 @@ var card = document.getElementsByName('card');
     <section class="order_box padd1 radius10" style="padding-top:0.3rem;padding-bottom:0.3rem;">
       <div class="table_box table_box2"> 
         <!--{if $total.real_goods_count neq 0}-->
-        <dl>
+        <dl style="display:none;">
           <dd class="dd1">{$lang.shipping_method} <span class="span1 radius5">必填</span></dd>
           <dd class="dd2" id="selected1">请选择配送方式</dd>
           <i></i>
         </dl>
-		<div class="dl_box" id="shipping" style="display:none">
+		<div class="dl_box" id="shipping" style="display:none;">
 		  <!-- {foreach from=$shipping_list item=shipping} 循环配送方式 -->
 		  <p>
-            <input name="shipping" type="radio" class="radio" id="shipping_{$shipping.shipping_id}" value="{$shipping.shipping_id}" {if $order.shipping_id eq $shipping.shipping_id}checked="true"{/if} supportCod="{$shipping.support_cod}" insure="{$shipping.insure}" onclick="selectShipping(this)" style="vertical-align:middle" /><label for="shipping_{$shipping.shipping_id}"> {$shipping.shipping_name} [{$shipping.format_shipping_fee}]</label>
+            <input name="shipping" type="radio" class="radio" id="shipping_{$shipping.shipping_id}" value="{$shipping.shipping_id}" {if '9' eq $shipping.shipping_id}checked="true"{/if} supportCod="{$shipping.support_cod}" insure="{$shipping.insure}" onclick="selectShipping(this)" style="vertical-align:middle" /><label for="shipping_{$shipping.shipping_id}"> {$shipping.shipping_name} [{$shipping.format_shipping_fee}]</label>
            </p>
             <!-- {/foreach} 循环配送方式 -->
              <!--  <input name="need_insure" id="ECS_NEEDINSURE" type="checkbox"  onclick="selectInsure(this.checked)" value="1" {if $order.need_insure}checked="true"{/if} {if $insure_disabled}disabled="true"{/if}  />
@@ -401,9 +404,9 @@ var card = document.getElementsByName('card');
         <!--{else}-->
         <input name = "payment" type="radio" value = "-1" checked="checked"  style="display:none"/>
         <!--{/if}-->  
-        <dl class="b_no" style="line-height: 40px;">
+        <dl class="b_no" style="line-height: 40px; display:none;">
           <dd class="dd1">是否开票</dd>
-		  <span class="modRadio fr" style="margin-top: 10px;">
+		      <span class="modRadio fr" style="margin-top: 10px;">
             <i class="fl"></i>
             <ins>否</ins>
          </span>
@@ -463,7 +466,7 @@ var card = document.getElementsByName('card');
         <!-- {/if} 是否使用红包 --> 
 
         <!-- {if $pack_list} 是否有包装 -->
-        <dl class="b_no">
+        <dl class="b_no" style="display:none;">
           <dd class="dd1">{$lang.goods_package}</dd>
 		   <dd class="dd2" id="selected5"> 未选择 </dd>  
            <i></i>
@@ -476,7 +479,7 @@ var card = document.getElementsByName('card');
 		</div>
         <!-- {/if} 是否使用包装 --> 
         <!-- {if $card_list} 是否有贺卡 -->
-        <dl class="b_no">
+        <dl class="b_no" style="display:none;">
           <dd class="dd1">{$lang.goods_card}</dd>
            <dd class="dd2" id="selected6"> 未选择 </dd>  
           <i></i>
@@ -592,7 +595,11 @@ var card = document.getElementsByName('card');
             <h6 style="text-align:center;line-height:20px;">{$lang.remember_order_number}: <font style="color:red">{$order.order_sn}</font></h6>
             <table width="90%" align="center" border="0" cellpadding="15" cellspacing="0" style="border:1px solid #ddd; margin:10px auto;" bgcolor="#FFFFFF">
               <tr>
-                <td align="left" style="padding: 5px;line-height: 24px;"><!--{if $order.shipping_name}-->{$lang.select_shipping}: <strong>{$order.shipping_name}</strong><br><!--{/if}-->{$lang.select_payment}: <strong>{$order.pay_name}</strong><br>{$lang.order_amount}: <strong>{$total.amount_formated}</strong><br>{$order.pay_desc}</td>
+                <td align="left" style="padding: 5px;line-height: 24px;">
+                <!--{if $order.shipping_name && 0}-->{$lang.select_shipping}: <strong>{$order.shipping_name}</strong>
+                <br><!--{/if}-->{$lang.select_payment}: <strong>{$order.pay_name}</strong>
+                <br>{$lang.order_amount}: <strong>{$total.amount_formated}</strong>
+                <!-- <br>{$order.pay_desc}</td> -->
               </tr>
               <!-- {if $pay_online} --> 
               <!-- 如果是线上支付则显示支付按钮 -->
@@ -709,7 +716,7 @@ var card = document.getElementsByName('card');
           <dl>
             <dd> <a href="user.php?act=get_password" class="f6">忘记密码</a> </dd>
           </dl>
-          <div class="hezuo">
+          <div class="hezuo" style="display:none;">
             <p class="t">使用合作账号登录</p>
             <p class="b"><a href="user.php?act=oath&type=qq"><img src="{$ectouch_themes}/images/quicklogin/qq.png"></a> <a href="user.php?act=oath&type=weibo"><img src="{$ectouch_themes}/images/quicklogin/weibo.png"></a> <a href="user.php?act=oath&type=renren"><img src="{$ectouch_themes}/images/quicklogin/renren.png"></a></p>
           </div>
@@ -737,10 +744,10 @@ var card = document.getElementsByName('card');
                 <input placeholder="请输入验证码" class="inputBg" name="mobile_code" id="mobile_code" type="text" />
               </dd>
               <dd>
-              <input id="zphone" name="sendsms" type="button" value="获取手机验证码" onClick="sendSms();" class="c-btn3" />
+              <input id="zphone" name="sendsms" type="button" value="获取手机验证码" onClick="getverifycode1();" class="c-btn3" />
               </dd>
             </dl>
-            <dl>
+            <dl style="display:none;">
               <dd>
                 <input id="agreement" name="agreement" type="checkbox" value="1" checked="checked" style="vertical-align:middle; zoom:200%;" /><label for="agreement"> 我已看过并同意《<a href="article.php?cat_id=-1">用户协议</a>》</label>
               </dd>
@@ -748,7 +755,7 @@ var card = document.getElementsByName('card');
             <dl>
               <dd>
                 <input name="act" type="hidden" value="act_register" />
-                <input name="enabled_sms" type="hidden" value="1" />
+                <input name="enabled_sms" type="hidden" value="{$enabled_sms_signin}" />
                 <input type="hidden" name="back_act" value="{$back_act}" />
                 <input name="Submit" type="submit" value="下一步" class="c-btn3" />
               </dd>

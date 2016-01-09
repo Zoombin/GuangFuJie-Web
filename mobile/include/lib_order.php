@@ -1676,7 +1676,7 @@ function get_cart_goods()
  */
 function get_consignee($user_id)
 {
-    if (isset($_SESSION['flow_consignee']))
+    if (isset($_SESSION['flow_consignee']) && 0)
     {
         /* 如果存在session，则直接返回session中的收货人信息 */
 
@@ -1690,9 +1690,13 @@ function get_consignee($user_id)
         if ($user_id > 0)
         {
             /* 取默认地址 */
-            $sql = "SELECT ua.*".
-                    " FROM " . $GLOBALS['ecs']->table('user_address') . "AS ua, ".$GLOBALS['ecs']->table('users').' AS u '.
-                    " WHERE u.user_id='$user_id' AND ua.address_id = u.address_id";
+            $sql = "SELECT ua.*,r1.region_name AS province_name, r2.region_name AS city_name, r3.region_name AS district_name".
+                    " FROM " . $GLOBALS['ecs']->table('user_address') . "AS ua INNER JOIN ".$GLOBALS['ecs']->table('users').' AS u ON ua.address_id=u.address_id '.
+                    "
+                    LEFT JOIN ecs_region r1 ON  r1.region_id = ua.province
+                    LEFT JOIN ecs_region r2 ON  r2.region_id = ua.city
+                    LEFT JOIN ecs_region r3 ON  r3.region_id = ua.district
+                    WHERE u.user_id='$user_id' AND ua.address_id = u.address_id";
 
             $arr = $GLOBALS['db']->getRow($sql);
         }

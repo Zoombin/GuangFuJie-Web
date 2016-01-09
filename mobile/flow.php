@@ -378,7 +378,8 @@ elseif ($_REQUEST['step'] == 'login')
             $smarty->assign('rand', mt_rand());
         }
         /* 短信发送设置 by carson */
-        if(intval($_CFG['sms_signin']) > 0){
+        // if(intval($_CFG['sms_signin']) > 0){
+        if(intval($_CFG['ecsdxt_mobile_reg']) > 0){
             $smarty->assign('enabled_sms_signin', 1);
         }
     }

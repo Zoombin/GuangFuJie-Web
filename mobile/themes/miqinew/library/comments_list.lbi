@@ -56,11 +56,11 @@
      <tr>
          
           <td>
-          <input name="comment_rank" type="radio" value="1" checked="checked" id="comment_rank5" /> 非常好
-          <input name="comment_rank" type="radio" value="2" id="comment_rank4" /> 很好
+          <input name="comment_rank" type="radio" value="5" checked="checked" id="comment_rank5" /> 非常好
+          <input name="comment_rank" type="radio" value="4" id="comment_rank4" /> 很好
           <input name="comment_rank" type="radio" value="3" id="comment_rank3" /> 一般
-          <input name="comment_rank" type="radio" value="4" id="comment_rank2" /> 不行
-          <input name="comment_rank" type="radio" value="5" id="comment_rank1" /> 很差
+          <input name="comment_rank" type="radio" value="2" id="comment_rank2" /> 不行
+          <input name="comment_rank" type="radio" value="1" id="comment_rank1" /> 很差
           </td>
         </tr>
           <td>

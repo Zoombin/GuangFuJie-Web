@@ -13,7 +13,7 @@
     <input name="tel" type="text" class="inputBg"  id="tel_{$sn}" value="{$consignee.tel|escape}" />
     <span>*</span></dd>
 </dl>
-<dl>
+<dl style="display:none;">
   <dd class="dd1">电子邮箱</dd>
   <dd class="dd2">
     <input name="email" type="text" class="inputBg"  id="email_{$sn}" value="{$consignee.email|escape}" />
@@ -62,7 +62,7 @@
     <input name="address" type="text" class="inputBg"  id="address_{$sn}" value="{$consignee.address|escape}" />
     <span>*</span></dd>
 </dl>
-<dl>
+<dl style="display:none;">
   <dd class="dd1">{$lang.postalcode}</dd>
   <dd class="dd2">
     <input name="zipcode" type="text" class="inputBg"  id="zipcode_{$sn}" value="{$consignee.zipcode|escape}" />

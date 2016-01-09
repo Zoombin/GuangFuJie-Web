@@ -63,7 +63,7 @@
           <dl>
             <dd> <a href="user.php?act=get_password" class="f6">忘记密码</a> </dd>
           </dl>
-          <div class="hezuo">
+          <div class="hezuo" style="display:none;">
             <p class="t">使用合作账号登录</p>
             <p class="b"><a href="user.php?act=oath&type=qq"><img src="{$ectouch_themes}/images/quicklogin/qq.png"></a> <a href="user.php?act=oath&type=weibo"><img src="{$ectouch_themes}/images/quicklogin/weibo.png"></a> <a href="user.php?act=oath&type=renren"><img src="{$ectouch_themes}/images/quicklogin/renren.png"></a></p>
           </div>
@@ -94,7 +94,7 @@
               <input id="zphone" name="sendsms" type="button" value="获取手机验证码" onClick="getverifycode1();" class="c-btn3" />
               </dd>
             </dl>
-            <dl>
+            <dl style="display:none;">
               <dd>
                 <input id="agreement" name="agreement" type="checkbox" value="1" checked="checked" style="vertical-align:middle; zoom:200%;" /><label for="agreement"> 我已看过并同意《<a href="article.php?cat_id=-1">用户协议</a>》</label>
               </dd>

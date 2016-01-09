@@ -189,8 +189,12 @@ function get_profile($user_id)
  */
 function get_consignee_list($user_id)
 {
-    $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('user_address') .
-            " WHERE user_id = '$user_id' LIMIT 5";
+    $sql = "SELECT ua.*,r1.region_name AS province_name, r2.region_name AS city_name, r3.region_name AS district_name FROM " . $GLOBALS['ecs']->table('user_address') .
+            "ua 
+            LEFT JOIN ecs_region r1 ON  r1.region_id = ua.province
+            LEFT JOIN ecs_region r2 ON  r2.region_id = ua.city
+            LEFT JOIN ecs_region r3 ON  r3.region_id = ua.district
+            WHERE ua.user_id = '$user_id' LIMIT 5";
 
     return $GLOBALS['db']->getAll($sql);
 }

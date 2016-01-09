@@ -34,9 +34,10 @@ function changenum(diff) {
 
 <body>
 <header id="header">
-  <div class="header_l header_return"> <a class="ico_10" href="cat_all.php"> 返回 </a> </div>
+  <!-- <div class="header_l header_return"> <a class="ico_10" href="cat_all.php"> 返回 </a> </div> -->
+  <div class="header_l header_return"> <a class="ico_10" href="index.php"> 返回 </a> </div>
   <h1> 商品详情 </h1>
-  <div class="header_r header_search"> <a class="ico_15" href="ectouch.php?act=share&content={$goods.goods_name}&pic={$goods.original_img}"> 分享 </a> </div>
+  <!-- <div class="header_r header_search"> <a class="ico_15" href="ectouch.php?act=share&content={$goods.goods_name}&pic={$goods.original_img}"> 分享 </a> </div> -->
 </header>
 
 <!--商品图 s---> 
@@ -95,7 +96,7 @@ function showPic(){
 <!--商品图 end---> 
 <!--商品参数-->
 <section class="goodsInfo">
-  <a class="collect" id="collect_box" href="javascript:collect({$goods.goods_id})" style="display: inline;">{$record_count}</a>
+  <!-- <a class="collect" id="collect_box" href="javascript:collect({$goods.goods_id})" style="display: inline;">{$record_count}</a> -->
   <div class="title">
     <h1> {$goods.goods_style_name} </h1>
   </div>
@@ -209,7 +210,7 @@ function showPic(){
           <div class="items"> <span class="ui-number radius5"> 
             <!-- {if $goods.goods_id gt 0 && $goods.is_gift eq 0 && $goods.parent_id eq 0} 普通商品可修改数量 -->
             <button type="button" class="decrease radius5" onclick="changenum(- 1)">-</button>
-            <input class="num" name="number" id="goods_number" autocomplete="off" value="1" min="1" max="{$goods.goods_number}" type="number" />
+            <input class="num" name="number" id="goods_number" onchange="changenum(0)" autocomplete="off" value="1" min="1" max="{$goods.goods_number}" type="number" />
             <button type="button" class="increase radius5" onclick="changenum(1)">+</button>
             <!-- {else} --> 
             {$goods.goods_number} 
@@ -286,7 +287,7 @@ function tab(id){
     <ul style="position: static;" id="detail_nav">
       <li id="tabs1" onClick="tab(1)" class="current"> 详情 </li>
       <li id="tabs2" onClick="tab(2)" class=""> 评价 <span class="review-count">({$goods.comment_count})</span> </li>
-      <li id="tabs3" onClick="tab(3)" class=""> 热销 </li>
+      <!-- <li id="tabs3" onClick="tab(3)" class=""> 热销 </li> -->
     </ul>
   </header>
   <div id="tab1" class="">
