@@ -60,5 +60,5 @@ $config['ver_url'] = 'http://zoombin.com';
 $ip = $_SERVER['SERVER_ADDR'];
 
 if (isGuangFuServer($ip)) {
-    $config['site_url']='http://112.124.98.9/guangfujie'; //电脑版地址
+    $config['site_url']='http://112.124.98.9/guangfujie/'; //电脑版地址
 }
