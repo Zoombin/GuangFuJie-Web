@@ -79,7 +79,8 @@ function randomkeys()
 
 ?>
 
-<script language="javascript" src="http://res.mail.qq.com/mmr/static/lib/js/jquery.js"></script>
+<!-- <script language="javascript" src="http://res.mail.qq.com/mmr/static/lib/js/jquery.js"></script> -->
+<script language="javascript" src="../themes/miqinew/js/jquery.min.js"></script>
 <script Language="javascript">
 
 function getOrderId()
