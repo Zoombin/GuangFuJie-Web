@@ -9,7 +9,8 @@ $appkey2 = "APCTzPGjN7GZPZiSrIEYQtLhRYKCvctBKHzgUWJC1csi76Mt0LwzMGFiKWCVPpiDXFcW
 $partner2 = "1219490201";//替换partnerid
 $partnerKey2 ="454cc026cb7fef550116e20ecb8711aa";//替换partnerkey
 $notify_url2 = "http://www.jinguishop.com/auth/wxpaynotify.php";*/
-$notify_url2 = '/respond.php?code=wxpay';
+// $notify_url2 = '/respond.php?code=wxpay';
+$notify_url2 = 'http://112.124.98.9/guangfujie/mobile/respond.php?code=wxpay';
 
 $input_charset2 = "UTF-8";
 		
