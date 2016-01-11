@@ -114,7 +114,7 @@ class wxpay
 			}
         }
 		$param = substr($param, 0, -1);
-        $button = '<div style="text-align:center"><input class="btn btn-warning btn-lg" type="button" onclick="window.location.href=\'auth/wxpay.php?'.$param.'\';" value="' .$GLOBALS['_LANG']['pay_button']. '" /></div>';
+        $button = '<div style="text-align:center;margin-bottom:8px;"><input class="btn btn-warning btn-lg" type="button" onclick="window.location.href=\'auth/wxpay.php?'.$param.'\';" value="' .$GLOBALS['_LANG']['pay_button']. '" /></div>';
 
         return $button;
     }

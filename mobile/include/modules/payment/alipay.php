@@ -199,7 +199,7 @@ if(1||($ua == '' || preg_match($uachar, $ua)) && !strpos(strtolower($_SERVER['RE
 	
 			/************************生成支付链接**************************/
 			
-			$button = '<div style="text-align:center"><input type="button" class="btn btn-warning btn-lg" onclick="window.open(\''.$gateway.$param. '&sign='.md5($sign).'\')" value="' .$GLOBALS['_LANG']['pay_button']. '" /></div>';
+			$button = '<div style="text-align:center;margin-bottom:8px;"><input type="button" class="btn btn-warning btn-lg" onclick="window.open(\''.$gateway.$param. '&sign='.md5($sign).'\')" value="' .$GLOBALS['_LANG']['pay_button']. '" /></div>';
 			return $button;
 		}
 	
