@@ -1698,5 +1698,5 @@ fieldset[disabled] .btn-link:focus {
 .s-detail #tab2{background: #fff;}
 .s-detail #tab2 #pagebar{float: none;width: 100%;border-bottom: dashed 1px #ccc;text-align: right;}
 
-.global-nav__nav-item {text-align: center;}
-.global-nav__nav-link {display: inline;}
+.global-nav__nav-wrap .global-nav__nav-item {text-align: center;}
+.global-nav__nav-wrap .global-nav__nav-link {display: inline;}
