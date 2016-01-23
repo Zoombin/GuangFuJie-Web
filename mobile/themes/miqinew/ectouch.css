@@ -1658,3 +1658,28 @@ fieldset[disabled] .btn-link:focus {
 .btn-block + .btn-block {
   margin-top: 5px;
 }
+
+
+
+/*banner*/
+.banner {  height:auto;    overflow: hidden;  position: relative;  width: 100%;}
+.banner ul li{ float:left;}
+.banner .n_banner{ width:100%; height:auto; }
+.banner .n_banner img{ width:100%;}	
+.banner .menu{ width:100%; height:34px; position:absolute; bottom:0; left:0; z-index:1; text-align:center}
+.banner .menu a{ width:12px; height:12px; display:inline-block; background:#fff;  margin-right:10px; margin-top:11px}
+.banner .menu a.now{ background:#036eb8}
+
+ /*comment*/
+.comment-list{margin: 20px 0;width: 100%;padding:0 5px;box-sizing: border-box;}
+.comment-list *{box-sizing: border-box;}
+.comment-list .cl-title{padding:10px; line-height: 30px;font-size: 120%;color: #666;}
+.comment-list .clist{padding:0;margin: 0;}
+.comment-list .clist .cl-item{display: block;margin:10px 0;padding:0 10px;background: #fff;border: 1px solid #eee;border-radius: 6px;box-shadow: 0 0 2px #ddd;}
+.comment-list .cl-item .cli-bottom,
+.comment-list .cl-item .cli-top{font-size: 100%;color: #999;padding: 10px}
+.comment-list .cl-item .cli-top{border-bottom: 1px dashed #ccc;}
+.comment-list .cl-item .cli-bottom{text-align: right;border-top: 1px dashed #ccc;}
+.comment-list .cl-item .clib-name,
+.comment-list .cl-item .clit-location{padding-right: 15px;}
+.comment-list .cl-item .cli-content{font-size: 110%;color: #666;line-height: 150%;text-indent: 2em;padding:8px 0}
