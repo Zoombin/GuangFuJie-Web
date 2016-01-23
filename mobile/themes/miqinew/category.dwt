@@ -32,20 +32,20 @@
       <div class="banner_box">
           <ul>
             <li><img src="images/banner1.jpg" alt=""/></li>
-            <li><img src="images/banner2.jpg" alt=""/></li>
-            <li><img src="images/banner3.jpg" alt=""/></li>
+            <!--<li><img src="images/banner2.jpg" alt=""/></li>
+            <li><img src="images/banner3.jpg" alt=""/></li>-->
           </ul>
          </div>
          <div class="menu">
           <a href="javascript:;" class="now"></a>
-            <a href="javascript:;"></a>
-            <a href="javascript:;"></a>
+            <!--<a href="javascript:;"></a>
+            <a href="javascript:;"></a>-->
         </div>
    </div>
 </div>
 
 
-  
+
   <!-- #BeginLibraryItem "/library/goods_list.lbi" --><!-- #EndLibraryItem -->
 
 

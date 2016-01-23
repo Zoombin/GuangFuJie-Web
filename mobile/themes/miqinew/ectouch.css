@@ -1661,19 +1661,19 @@ fieldset[disabled] .btn-link:focus {
 
 
 
-/*banner*/
+ /*banner*/
 .banner {  height:auto;    overflow: hidden;  position: relative;  width: 100%;}
 .banner ul li{ float:left;}
 .banner .n_banner{ width:100%; height:auto; }
 .banner .n_banner img{ width:100%;}	
 .banner .menu{ width:100%; height:34px; position:absolute; bottom:0; left:0; z-index:1; text-align:center}
-.banner .menu a{ width:12px; height:12px; display:inline-block; background:#fff;  margin-right:10px; margin-top:11px}
+.banner .menu a{ width:20px; height:20px; border-radius:50%; display:inline-block; background:#fff;  margin-right:10px; margin-top:11px}
 .banner .menu a.now{ background:#036eb8}
 
  /*comment*/
-.comment-list{margin: 20px 0;width: 100%;padding:0 5px;box-sizing: border-box;}
+.comment-list{margin: 10px 0 30px;width: 100%;padding:0 5px;box-sizing: border-box;}
 .comment-list *{box-sizing: border-box;}
-.comment-list .cl-title{padding:10px; line-height: 30px;font-size: 120%;color: #666;}
+.comment-list .cl-title{padding:10px; line-height: 30px;font-size: 120%;color: #666;background: #fff;}
 .comment-list .clist{padding:0;margin: 0;}
 .comment-list .clist .cl-item{display: block;margin:10px 0;padding:0 10px;background: #fff;border: 1px solid #eee;border-radius: 6px;box-shadow: 0 0 2px #ddd;}
 .comment-list .cl-item .cli-bottom,
@@ -1686,15 +1686,17 @@ fieldset[disabled] .btn-link:focus {
 
  /*goods info*/
 .goods-buy-section{padding: 0;}
-.goodsBuy .option{overflow: hidden;}
-.goodsBuy .option .btn { float:left;width: 48%;margin: 0 1%;height: 3.5rem;font-size: 1.1rem;}
+.quantity{display: block;overflow: hidden;}
+.quantity h2{display: inline-block;width: auto;float: left; line-height: 2.4rem}
+.goodsBuy .option{overflow: hidden;display: block;}
+.goodsBuy .option .btn {width: 48%;margin: 0 1%;height: 3.5rem;font-size: 1.1rem;display:block;float: left;}
 .pro-table{width: 98%;margin: 10px 1%;box-sizing: border-box;}
-.pro-table li{display: block;padding: 5px;border-bottom: 1px solid #ccc;}
+.pro-table li{display: block;padding: 5px;border-bottom: 1px solid #ddd;}
 .pro-table li:LAST-OF-TYPE{border-bottom: none;}
 .pro-table .pt-title{padding: 10px;font-weight: bold;color: #666}
 .pro-table .pti-name{padding-right: 5px;color: #81BA39;font-size: 1.1rem;}
 .pro-table .pti-value{padding-left: 5px;color: #000;font-size: 1rem;}
-.s-detail header ul{overflow: hidden;}
+.s-detail header ul{overflow: hidden;display: block;}
 .s-detail header ul li {display: block;float: left; width: 50%;margin: 0;}
 .s-detail #tab2{background: #fff;}
 .s-detail #tab2 #pagebar{float: none;width: 100%;border-bottom: dashed 1px #ccc;text-align: right;}
