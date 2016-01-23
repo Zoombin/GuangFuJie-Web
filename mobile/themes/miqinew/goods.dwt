@@ -146,8 +146,8 @@ function showPic(){
   </ul>
 </section>
 <!--商品参数 begin-->
-<div class="wrap">
-  <section class="goodsBuy radius5">
+<div class="wrap  goods-buy-section">
+  <section class="goodsBuy">
     <input id="goodsBuy-open" type="checkbox">
     <label class="info" for="goodsBuy-open">
     <div>请选择<span><!-- {foreach name=spec from=$specification item=spec key=spec_key} --><!-- {if $smarty.foreach.spec.iteration>1}-->/<!-- {/if} -->{$spec.name}<!-- {/foreach} --></span><i></i></div>
@@ -293,6 +293,14 @@ function tab(id){
   <div id="tab1" class="">
     <div class="desc wrap">
       <div class="blank2"></div>
+          <ul class="pro-table">
+ <!-- {foreach from=$properties item=value key=key} -->
+    <li class="pt-title">{$key}</li>
+     <!-- {foreach from=$value item=item} -->
+        <li class="pt-item"><span class="pti-name">{$item.name}:</span><span class="pti-value">{$item.value}</span></li>
+    <!-- {/foreach} -->
+<!-- {/foreach} -->
+</ul>
       {$goods.goods_desc}
     </div>
   </div>

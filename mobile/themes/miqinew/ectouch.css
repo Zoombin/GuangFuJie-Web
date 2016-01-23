@@ -1683,3 +1683,17 @@ fieldset[disabled] .btn-link:focus {
 .comment-list .cl-item .clib-name,
 .comment-list .cl-item .clit-location{padding-right: 15px;}
 .comment-list .cl-item .cli-content{font-size: 110%;color: #666;line-height: 150%;text-indent: 2em;padding:8px 0}
+
+ /*goods info*/
+.goods-buy-section{padding: 0;}
+.goodsBuy .option{overflow: hidden;}
+.goodsBuy .option .btn { float:left;width: 48%;margin: 0 1%;height: 3.5rem;font-size: 1.1rem;}
+.pro-table{width: 98%;margin: 10px 1%;box-sizing: border-box;}
+.pro-table li{display: block;padding: 5px;}
+.pro-table .pt-title{padding: 10px;font-weight: bold;color: #666}
+.pro-table .pti-name{padding-right: 5px;color: #777;}
+.pro-table .pti-value{padding-left: 5px;color: #999;}
+.s-detail header ul{overflow: hidden;}
+.s-detail header ul li {display: block;float: left; width: 50%;margin: 0;}
+.s-detail #tab2{background: #fff;}
+.s-detail #tab2 #pagebar{float: none;width: 100%;border-bottom: dashed 1px #ccc;text-align: right;}
