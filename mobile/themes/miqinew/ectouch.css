@@ -1697,6 +1697,3 @@ fieldset[disabled] .btn-link:focus {
 .s-detail header ul li {display: block;float: left; width: 50%;margin: 0;}
 .s-detail #tab2{background: #fff;}
 .s-detail #tab2 #pagebar{float: none;width: 100%;border-bottom: dashed 1px #ccc;text-align: right;}
-
-.global-nav__nav-item {text-align: center;}
-.global-nav__nav-link {display: inline;}
