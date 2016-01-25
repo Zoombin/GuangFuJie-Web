@@ -1659,7 +1659,7 @@ fieldset[disabled] .btn-link:focus {
   margin-top: 5px;
 }
 
-
+.hide{display: none}
 
  /*banner*/
 .banner {  height:auto;    overflow: hidden;  position: relative;  width: 100%;}
