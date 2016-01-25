@@ -1,101 +1,143 @@
 ﻿<?php
-session_start();
-if(isset($_GET['orderName'])){
-    $_SESSION['order']['orderName'] = $_GET['orderName'];
-}
-if(isset($_GET['orderName'])){
-    $_SESSION['order']['out_trade_no'] = $_GET['orderid'];
-}
-if(isset($_GET['price'])){
-    $_SESSION['order']['total_fee'] = $_GET['price'];
-}
-if(isset($_GET['appid2'])){
-    $_SESSION['order']['appid'] = $_GET['appid2'];
-}
-if(isset($_GET['appkey2'])){
-    $_SESSION['order']['appkey'] =$_GET['appkey2'];
-}
-if(isset($_GET['partner2'])){
-    $_SESSION['order']['partner'] =$_GET['partner2'];
-}
-if(isset($_GET['partnerKey2'])){
-    $_SESSION['order']['partnerKey'] =$_GET['partnerKey2'];
-}
-$payment_class = ROOT_PATH . 'WxPayPubHelper/WxPayPubHelper.php';
 
-if (file_exists($payment_class)){
-    require_once $payment_class;
-}
-//使用jsapi接口
-$jsApi = new JsApi_pub();
+$spbill_create_ip2=($_SERVER["REMOTE_ADDR"])? $_SERVER["REMOTE_ADDR"] : '127.0.0.1';
 
-//=========步骤1：网页授权获取用户openid============
-//通过code获得openid
-if (!isset($_GET['code']))
+// 给下列参数赋值
+/*
+$appid2 = "wxabf100fb3919c9bf";//替换appid
+$appkey2 = "APCTzPGjN7GZPZiSrIEYQtLhRYKCvctBKHzgUWJC1csi76Mt0LwzMGFiKWCVPpiDXFcWiWaRhbd1euAyIOKR6to3yudOsRpJohVcyNtaWIA5DAnnGGXkqTGjZzjR5bMP";//替换appkey
+$partner2 = "1219490201";//替换partnerid
+$partnerKey2 ="454cc026cb7fef550116e20ecb8711aa";//替换partnerkey
+$notify_url2 = "http://www.jinguishop.com/auth/wxpaynotify.php";*/
+// $notify_url2 = '/respond.php?code=wxpay';
+$notify_url2 = '/mobile/respond.php?code=wxpay';
+
+$input_charset2 = "UTF-8";
+		
+		//传递下列参数
+		$body2 = !empty($_GET['orderName']) ? $_GET['orderName'] : '';
+		$out_trade_no2 = !empty($_GET['orderid']) ? $_GET['orderid'] : ''; //订单号，商户需要保证该字段对于本商户的唯一性
+		$total_fee2 = !empty($_GET['price']) ? $_GET['price'] : '';
+		$appid2 = !empty($_GET['appid2']) ? $_GET['appid2'] : '';
+		$appkey2 = !empty($_GET['appkey2']) ? $_GET['appkey2'] : '';
+		$partner2 = !empty($_GET['partner2']) ? $_GET['partner2'] : '';
+		$partnerKey2 = !empty($_GET['partnerKey2']) ? $_GET['partnerKey2'] : '';
+		
+
+$packageString = getPackage($body2,$input_charset2,$notify_url2,$out_trade_no2,$partner2,$spbill_create_ip2,$total_fee2,$partnerKey2);
+$time_stamp = time();
+$nonce_str = randomkeys();
+$sign = getSign($appid2,$appkey2,$nonce_str,$packageString,$time_stamp);
+
+function getPackage($body2,$input_charset2,$notify_url2,$out_trade_no2,$partner2,$spbill_create_ip2,$total_fee2,$partnerKey2)
 {
-    //触发微信返回code码
-    $url = $jsApi->createOauthUrlForCode(WxPayConf_pub::JS_API_CALL_URL);
-    Header("Location: $url");
-}else
-{
-    //获取code码，以获取openid
-    $code = $_GET['code'];
-    $jsApi->setCode($code);
-    $openid = $jsApi->getOpenId();
+		$banktype = "WX";
+    $fee_type = "1";//费用类型，这里1为默认的人民币
+    $body = $body2;
+    $input_charset = $input_charset2;
+    $notify_url = $notify_url2;
+    $out_trade_no = $out_trade_no2;
+    $partner = $partner2;
+    $spbill_create_ip = $spbill_create_ip2;
+    $total_fee = $total_fee2;
+    $partnerKey = $partnerKey2;
+
+    $signString = "bank_type=".$banktype."&body=".$body."&fee_type=".$fee_type."&input_charset=".$input_charset."&notify_url=".$notify_url."&out_trade_no=".$out_trade_no."&partner=".$partner."&spbill_create_ip=".$spbill_create_ip."&total_fee=".$total_fee."&key=".$partnerKey;
+    $md5SignValue =  strtoupper(md5($signString));
+
+    $banktype = rawurlencode($banktype);
+    $body=rawurlencode($body);
+    $fee_type=rawurlencode($fee_type);
+    $input_charset = rawurlencode($input_charset);
+    $notify_url = rawurlencode($notify_url);
+    $out_trade_no = rawurlencode($out_trade_no);
+    $partner = rawurlencode($partner);
+    $spbill_create_ip = rawurlencode($spbill_create_ip);
+    $total_fee = rawurlencode($total_fee);
+
+    $completeString = "bank_type=".$banktype."&body=".$body."&fee_type=".$fee_type."&input_charset=".$input_charset."&notify_url=".$notify_url."&out_trade_no=".$out_trade_no."&partner=".$partner."&spbill_create_ip=".$spbill_create_ip."&total_fee=".$total_fee;
+    $completeString = $completeString . "&sign=".$md5SignValue;
+    
+    return $completeString;
 }
-//=========步骤2：使用统一支付接口，获取prepay_id============
-//使用统一支付接口
-$unifiedOrder = new UnifiedOrder_pub();
 
-//设置统一支付接口参数
-//设置必填参数
-//appid已填,商户无需重复填写
-//mch_id已填,商户无需重复填写
-//noncestr已填,商户无需重复填写
-//spbill_create_ip已填,商户无需重复填写
-//sign已填,商户无需重复填写
-$unifiedOrder->setParameter("openid","$openid");//商品描述
-$unifiedOrder->setParameter("body","贡献一分钱");//商品描述
-//自定义订单号，此处仅作举例
-$timeStamp = time();
-$out_trade_no = WxPayConf_pub::APPID."$timeStamp";
-$unifiedOrder->setParameter("out_trade_no",$_SESSION['order']['out_trade_no']);//商户订单号
-$unifiedOrder->setParameter("total_fee", $_SESSION['order']['total_fee']);//总金额
-$unifiedOrder->setParameter("notify_url",WxPayConf_pub::NOTIFY_URL);//通知地址
-$unifiedOrder->setParameter("trade_type","JSAPI");//交易类型
-$prepay_id = $unifiedOrder->getPrepayId();
-//=========步骤3：使用jsapi调起支付============
-$jsApi->setPrepayId($prepay_id);
+function getSign($appid2,$appkey2,$nonce_str,$packageString,$time_stamp)
+{
+    $keyvaluestring = "appid=".$appid2."&appkey=".$appkey2."&noncestr=".$nonce_str."&package=".$packageString."&timestamp=".$time_stamp;
+    return sha1($keyvaluestring);
+}
 
-$jsApiParameters = $jsApi->getParameters();  
+function randomkeys()
+{
+ $pattern='1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLOMNOPQRSTUVWXYZ';
+ $key = '';
+ for($i=0;$i<32;$i++)
+ {
+   $key .= $pattern{mt_rand(0,61)};    //生成php随机数
+ }
+ return $key;
+}
+
 ?>
-<script type="text/javascript">
 
-		//调用微信JS api 支付
-		function jsApiCall()
-		{
-			WeixinJSBridge.invoke(
-				'getBrandWCPayRequest',
-				<?php echo $jsApiParameters; ?>,
-				function(res){
-					WeixinJSBridge.log(res.err_msg);
-					//alert(res.err_code+res.err_desc+res.err_msg);
-				}
-			);
-		}
+<!-- <script language="javascript" src="http://res.mail.qq.com/mmr/static/lib/js/jquery.js"></script> -->
+<script language="javascript" src="../themes/miqinew/js/jquery.min.js"></script>
+<script Language="javascript">
 
-		function callpay()
-		{
-			if (typeof WeixinJSBridge == "undefined"){
-			    if( document.addEventListener ){
-			        document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
-			    }else if (document.attachEvent){
-			        document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
-			        document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
-			    }
-			}else{
-			    jsApiCall();
-			}
-		}
-		callpay();
-	</script>
+function getOrderId()
+{
+    return "<?php echo $out_trade_no2;?>";
+}
+
+function getAppId()
+{
+    return "<?php echo $appid2;?>";
+}
+
+
+function getPackage()
+{
+    return "<?php echo $packageString?>";
+}
+function getTimeStamp()
+{
+	return "<?php echo $time_stamp?>";
+}
+
+function getNonceStr()
+{
+	return "<?php echo $nonce_str?>";
+}
+
+function getSignType()
+{
+    return "SHA1";
+}
+
+function getSign()
+{
+    return "<?php echo $sign?>";
+}
+
+// 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+
+	                          //公众号支付
+	                          WeixinJSBridge.invoke('getBrandWCPayRequest',{
+				                         "appId" : getAppId(), //公众号名称，由商户传入
+				                         "timeStamp" : getTimeStamp(), //时间戳
+				                         "nonceStr" : getNonceStr(), //随机串
+				                         "package" : getPackage(),//扩展包
+				                         "signType" : getSignType(), //微信签名方式:1.sha1
+				                         "paySign" : getSign() //微信签名
+				                         },function(res){
+				                         if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+				                         window.location.href="/mobile/respond.php?code=wxpay&out_trade_no="+getOrderId();
+				                         }
+				                         else
+				                         {
+				                         window.location.href="/mobile/respond.php?code=wxpay";
+				                         }
+				                     }); 
+                          }, false);
+</script>
