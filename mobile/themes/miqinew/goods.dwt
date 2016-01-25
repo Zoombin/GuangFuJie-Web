@@ -100,7 +100,7 @@ function showPic(){
   <div class="title">
     <h1> {$goods.goods_style_name} </h1>
   </div>
-  <ul class="hide">
+  <ul>
     <!--{if $goods.is_promote and $goods.gmt_end_time } 促销-->
     <li>{$lang.promote_price}<b class="price">{$goods.promote_price}</b>　<!-- {if $cfg.show_marketprice} 市场价格-->
     <del>{$goods.market_price}</del> 
@@ -141,7 +141,7 @@ function showPic(){
   </ul>
   <!-- {/if} -->
   
-  <ul class="hide">
+  <ul>
     <li>月销量：{$sales_count}件</li>
   </ul>
 </section>

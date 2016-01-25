@@ -6,10 +6,7 @@ jQuery(function($){
 	    var bannindex=0;
 		var bw=$(".n_banner").width();
 		$(".banner_box li").width(bw)
-		var ban_width =bw;
-		$(".banner .menu").hide();
-		if($(".banner_box li").size>1){
-		$(".banner .menu").show();
+		var ban_width =bw; ;
 		var bannerroll = setInterval(bannext,4000);
 		$('.banner').hover(function() {
 			clearInterval(bannerroll) 
@@ -122,6 +119,5 @@ jQuery(function($){
 			};
 			bannerroll = setInterval(bannext,4000);
 		});
-	}
 	////////////////////////////////////////////////////////////////
 });
