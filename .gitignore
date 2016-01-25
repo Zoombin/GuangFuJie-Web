@@ -30,3 +30,6 @@ compiled
 static_caches
 temp
 # images
+*.buildpath
+.project
+*.prefs
