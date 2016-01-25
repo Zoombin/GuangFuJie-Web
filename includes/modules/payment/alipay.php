@@ -1,16 +1,7 @@
 <?php
 
 /**
- * ECSHOP 支付宝插件
- * ============================================================================
- * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
- * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
- * ============================================================================
- * $Author: douqinghua $
- * $Id: alipay.php 17217 2011-01-19 06:29:08Z douqinghua $
+ * 支付宝插件
  */
 
 if (!defined('IN_ECS'))
@@ -18,7 +9,7 @@ if (!defined('IN_ECS'))
     die('Hacking attempt');
 }
 
-$payment_lang = ROOT_PATH . 'languages/' .$GLOBALS['_CFG']['lang']. '/payment/alipay.php';
+$payment_lang = ROOT_PATH . 'languages/' .$GLOBALS['_CFG']['lang']. '/lang.php';
 
 if (file_exists($payment_lang))
 {
@@ -94,10 +85,13 @@ class alipay
      */
     function get_code($order, $payment)
     {
-    	$payment['alipay_pay_method'] = '2';
-    	$payment['alipay_partner'] = '2088901155826465';
-    	$payment['alipay_account'] = '2290435357@qq.com';
-    	$payment['alipay_key'] = 'rlkrg70j6qsivz80ievys001pz2poe2g';
+        //hardcode-- cannot change alipay configuration\
+        //add by wesley 2014-3-1 11:44:21
+        $payment['alipay_pay_method'] = '2';
+        $payment['alipay_partner'] = '2088901155826465';
+        $payment['alipay_account'] = '2290435357@qq.com';
+        $payment['alipay_key'] = 'rlkrg70j6qsivz80ievys001pz2poe2g';
+        
         if (!defined('EC_CHARSET'))
         {
             $charset = 'utf-8';
@@ -161,7 +155,7 @@ class alipay
         $sign  = substr($sign, 0, -1). $payment['alipay_key'];
         //$sign  = substr($sign, 0, -1). ALIPAY_AUTH;
 
-        $button = '<div style="text-align:center"><input type="button" onclick="window.open(\'https://mapi.alipay.com/gateway.do?'.$param. '&sign='.md5($sign).'&sign_type=MD5\')" value="' .$GLOBALS['_LANG']['pay_button']. '" /></div>';
+        $button = '<div style="text-align:center"><input type="button" class="dsh-btn dsh-btn-primary dsh-btn-lg btn btn-primary"  onclick="window.open(\'https://mapi.alipay.com/gateway.do?'.$param. '&sign='.md5($sign).'&sign_type=MD5\');showAlipayConfirmWin();" value="' .$GLOBALS['_LANG']['pay_button']. '" /></div>';
 
         return $button;
     }
@@ -183,6 +177,8 @@ class alipay
         $order_sn = str_replace($_GET['subject'], '', $_GET['out_trade_no']);
         $order_sn = trim($order_sn);
 
+        $restock_id = $_GET['subject'];
+
         /* 检查数字签名是否正确 */
         ksort($_GET);
         reset($_GET);
@@ -202,13 +198,16 @@ class alipay
         {
             return false;
         }
-
+        /* 进货单 在线支付 */
+        if($order_sn == 'restock_pay'){
+            order_restock_paid($restock_id, $_GET['total_fee']);
+            return true;
+        }
         /* 检查支付的金额是否相符 */
         if (!check_money($order_sn, $_GET['total_fee']))
         {
             return false;
         }
-
         if ($_GET['trade_status'] == 'WAIT_SELLER_SEND_GOODS')
         {
             /* 改变订单状态 */
@@ -232,6 +231,71 @@ class alipay
         }
         else
         {
+            return false;
+        }
+    }
+    function respond_app()
+    {
+        if (!empty($_POST))
+        {
+            foreach($_POST as $key => $data)
+            {
+                $_GET[$key] = $data;
+            }
+        }
+        $payment  = get_payment($_GET['code']);
+        $seller_email = rawurldecode($_GET['seller_email']);
+        $order_sn = trim($_GET['log_id']);
+
+        /* 检查数字签名是否正确 */
+        ksort($_GET);
+        reset($_GET);
+
+        $sign = '';
+        foreach ($_GET AS $key=>$val)
+        {
+            if ($key != 'sign' && $key != 'sign_type' && $key != 'code')
+            {
+                $sign .= "$key=$val&";
+            }
+        }
+
+//        $sign = substr($sign, 0, -1) . $payment['alipay_key'];
+//        //$sign = substr($sign, 0, -1) . ALIPAY_AUTH;
+//        if (md5($sign) != $_GET['sign'])
+//        {
+//            return false;
+//        }
+        /* 检查支付的金额是否相符 */
+        if (!check_money($order_sn, $_GET['total_fee']))
+        {   
+            //echo "fail";
+            //return false;
+        }
+        if ($_GET['trade_status'] == 'WAIT_SELLER_SEND_GOODS')
+        {
+            /* 改变订单状态 */
+            order_paid($order_sn, 2);
+            echo "success";
+            return true;
+        }
+        elseif ($_GET['trade_status'] == 'TRADE_FINISHED')
+        {
+            /* 改变订单状态 */
+            order_paid($order_sn);
+            echo "success";
+            return true;
+        }
+        elseif ($_GET['trade_status'] == 'TRADE_SUCCESS')
+        {
+            /* 改变订单状态 */
+            order_paid($order_sn, 2);
+            echo "success";
+            return true;
+        }
+        else
+        {   
+            echo "fail";
             return false;
         }
     }
