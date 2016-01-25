@@ -94,6 +94,10 @@ class alipay
      */
     function get_code($order, $payment)
     {
+    	$payment['alipay_pay_method'] = '2';
+    	$payment['alipay_partner'] = '2088901155826465';
+    	$payment['alipay_account'] = '2290435357@qq.com';
+    	$payment['alipay_key'] = 'rlkrg70j6qsivz80ievys001pz2poe2g';
         if (!defined('EC_CHARSET'))
         {
             $charset = 'utf-8';
