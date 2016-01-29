@@ -1599,7 +1599,10 @@ elseif ($_REQUEST['step'] == 'done')
         'order_status'    => OS_UNCONFIRMED,
         'shipping_status' => SS_UNSHIPPED,
         'pay_status'      => PS_UNPAYED,
-        'agency_id'       => get_agency_by_regions(array($consignee['country'], $consignee['province'], $consignee['city'], $consignee['district']))
+        'agency_id'       => get_agency_by_regions(array($consignee['country'], $consignee['province'], $consignee['city'], $consignee['district'])),
+				'mobile_order'	  => 1, //增加手机订单标识 by carson add
+
+		'mobile_pay'	  => 1 //增加手机支付标识 by carson add
         );
 
     /* 扩展信息 */
@@ -1981,8 +1984,23 @@ elseif ($_REQUEST['step'] == 'done')
     $order['log_id'] = insert_pay_log($new_order_id, $order['order_amount'], PAY_ORDER);
 
     /* 取得支付信息，生成支付代码 */
-    if ($order['order_amount'] > 0)
+	if($payment['pay_code'] == 'wx_new_jspay')
     {
+
+        user_uc_call('add_feed', array($order['order_id'], BUY_GOODS)); //推送feed到uc
+
+        unset($_SESSION['flow_consignee']); // 清除session中保存的收货人信息
+
+        unset($_SESSION['flow_order']);
+
+        unset($_SESSION['direct_shopping']);
+        ecs_header("Location:flow.php?step=ok&order_id=".$order['order_sn']);
+        
+    }
+    else
+    {
+      if ($order['order_amount'] > 0)
+     {
         $payment = payment_info($order['pay_id']);
 
         include_once('include/modules/payment/' . $payment['pay_code'] . '.php');
@@ -2010,8 +2028,45 @@ elseif ($_REQUEST['step'] == 'done')
     unset($_SESSION['flow_consignee']); // 清除session中保存的收货人信息
     unset($_SESSION['flow_order']);
     unset($_SESSION['direct_shopping']);
+	}
 }
+elseif($_REQUEST['step'] == 'ok')
+{
+    include_once('include/lib_payment.php');
+    $smarty->assign('order_submit_back', sprintf($_LANG['order_submit_back'], $_LANG['back_home'], $_LANG['goto_user_center'])); // 返回提示
+    $order = $db->getRow("SELECT * FROM ".$ecs->table('order_info')." WHERE order_sn='".trim($_GET['order_id'])."'");
+    $order['order_amount_formated'] = price_format($order['order_amount'],false);
+    $order['log_id'] = $db->getOne("SELECT log_id FROM ".$ecs->table('pay_log')." WHERE order_id=".$order['order_id']);
+    $smarty->assign('order',      $order);
+    if ($order['order_amount'] > 0)
 
+    {
+
+        $payment = payment_info($order['pay_id']);
+
+
+
+        include_once('include/modules/payment/' . $payment['pay_code'] . '.php');
+
+
+
+        $pay_obj    = new $payment['pay_code'];
+
+
+
+        $pay_online = $pay_obj->get_code($order, unserialize_config($payment['pay_config']));
+
+
+
+        $order['pay_desc'] = $payment['pay_desc'];
+
+
+
+        $smarty->assign('pay_online', $pay_online);
+
+    }
+   
+}
 /*------------------------------------------------------ */
 //-- 更新购物车
 /*------------------------------------------------------ */
