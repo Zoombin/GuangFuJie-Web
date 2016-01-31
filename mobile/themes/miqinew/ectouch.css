@@ -1719,3 +1719,4 @@ fieldset[disabled] .btn-link:focus {
 .order_box #payment p:LAST-OF-TYPE {border: none}
 .order_box #payment p label{font-size: 1rem;padding-left: 8px;}
 .order_box #payment p input{width: 25px;height: 25px;}
+.order_box #payment p.active{background: #5498DB;}
