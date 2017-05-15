@@ -16,7 +16,8 @@ block content
             div.row
                 each item in service.items
                     div.col-sm-4.m-service-item-wrap
-                        a(href=item.link)
+                        //- a(href=item.link)
+                        a(href="javascript:void(0);")
                             img(src=item.src, alt=service.defaultAlt)/
                         p.text-center.m-service-desc #{item.title}
     
@@ -45,7 +46,8 @@ block content
                     a(href=item.link)
                         img(src=item.src, alt=alt)
                     div.m-case-text-wrap
-                        div.m-case-title!=item.title
+                        div.m-case-title
+                            a(href=item.link)!=item.title
                         div.m-case-desc!=item.desc
                 div.col-sm-6
                     +successCase(successCase.big, successCase.defaultAlt)
@@ -82,14 +84,15 @@ block content
             div.grayline
             div.row
                 each item in news.items
-                    div.col-sm-4.m-news-item
+                    div.col-sm-6.m-news-item
                         div.row
                             div.col-sm-6
                                 a(href=item.link)
                                     img(src=item.src, alt=news.defaultAlt)/
                             div.col-sm-6.m-news-text
-                                div.m-news-text__title #{item.title}
-                                div.m-news-text__date #{item.date}
+                                div.m-news-text__title
+                                    a(href=item.link) #{item.title}
+                                div.m-news-text__date #{item.date.split(' ')[0]}
 
     div.m-about
         div.container

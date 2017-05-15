@@ -7,7 +7,7 @@ module.exports = {
      */
     async getTeamsData() {
         console.log('获取团队信息');
-        let data = await teamModel.getTeams();
+        let data = await teamModel.getIndexTeams();
         return data
             ? {
                 mainTitle: teamData.mainTitle,

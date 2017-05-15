@@ -37,11 +37,14 @@ let findPartDataById = function(table, columns, id) {
     return query(sql, [columns, table, id]);
 }
 
-let findDataByPage = function( table, keys, start, end ) {
+let findDataByPage = function(table, keys, start, end) {
     let  sql =  "SELECT ?? FROM ??  LIMIT ? , ?"
     return query( sql, [keys,  table,  start, end ] )
 }
 
+let insertData = function(table, fields, values) {
+    // let sql = 'INSERT '
+}
 
 let getCount = function(table) {
     let sql = 'SELECT COUNT(*) as count FROM ??';
@@ -60,7 +63,8 @@ let deleteDataById = function(table, id) {
 
 // getCountTwo('select `id` FROM `case` WHERE `image_size` = ?', [2]).then((rows) => console.log(rows)).catch(error => console.log(error));
 // findPartDataById('banner', ['id', 'src'], 1).then(rows => console.log(rows)).catch(error => console.log(error));
-
+// query('INSERT INTO `test` (??, `created_date`, `updated_date`) VALUES(?, ?, NOW(), NOW())', [['name', 'age'], 'wfh', '10'])
+// .then(rows => console.log(rows)).catch(error => console.log(error));
 module.exports = {
     query,
     findAllDataById,

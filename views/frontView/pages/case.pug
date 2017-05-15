@@ -1,0 +1,47 @@
+extends ../layout
+block content
+    div.m-case-content
+        div.container
+            h2.text-center #{caseData.title}
+            div.grayline
+            //- div.m-case-content-img-wrap.text-center
+            //-     img(src='http://placehold.it/400x400')
+            h3 项目信息
+            //- p 本工程选用欧姆尼克新能源生产的Omniksol-13k-TL2逆变器。
+            //-   |无变压器设计，最大转换效率达到97.6%。
+            //- p 本工程选用由英利集团生产的优质高效率单晶硅275w太阳能电池组件。
+            //-   |该组件的电池转换效率可高达19.8%，领先于业内水平。
+            //-   |组件尺寸为 1640×990×40mm。所需安装屋面共有5个，考虑到各方面因素，采用倾斜20°朝南安装，
+            //-   |对屋顶进行斜贴合铺装。
+            each item in caseData.sections
+                p #{item}
+            ul.m-case-info.list-unstyled
+                li #{'项目地址——' + caseData.address}
+                li #{'项目地参考坐标——' + caseData.coordinate}
+                li #{'家庭供电方式——' + caseData.homePowerWay}
+                li #{'光伏安装容量——' + caseData.electric}
+                li #{'光伏发电系统接入——' + caseData.joinIn}
+                if caseData.installCompany
+                    li #{'安装商——' + caseData.installCompany}
+            h3 材料清单
+            table.table.table-bordered.table-hover
+                //- caption.text-center 项目信息
+                thead
+                    tr
+                        th 序号
+                        th 名称
+                        th 规格
+                        th 单位
+                        th 数量
+                tbody
+                    each item,index in caseData.materialsTable
+                        tr
+                            td #{index + 1}
+                            td #{item.name}
+                            td #{item.rule}
+                            td #{item.unit}
+                            td #{item.number}
+
+            
+                
+        

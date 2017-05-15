@@ -1,11 +1,11 @@
 form.m-contactus-form
     div.col-sm-3
-        input.form-control(type='text', placeholder='您的姓名')
-        input.form-control(type='text', placeholder='您的地址')
+        input.form-control(type='text', placeholder='您的姓名', name='name')
+        input.form-control(type='text', placeholder='您的地址', name='address')
     div.col-sm-3
-        input.form-control(type='text', placeholder='您的电话')
-        input.form-control(type='text', placeholder='您的屋顶面积')
+        input.form-control(type='text', placeholder='您的电话', name='tel')
+        input.form-control(type='text', placeholder='您的屋顶面积', name='area')
     div.col-sm-4
-        textarea.form-control(placeholder='您的需求', rows='5')
+        textarea.form-control(placeholder='您的需求', rows='5', name='msg')
     div.col-sm-2
-        button.btn.m-contactus-btn(type='button') 马上预约
+        button#contactus-btn.btn.m-contactus-btn(type='button') 马上预约

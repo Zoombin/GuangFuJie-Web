@@ -22,7 +22,9 @@ const successCase = {
     async getFourSmall() {
         console.log('case--2');
         let sql = 'SELECT ' +
+                    '`id`, ' +
                     '`src`, '  +
+                    '`link`, ' +
                     '`title` ,' +
                     '`desc` ' +
                   'FROM `case` ' +

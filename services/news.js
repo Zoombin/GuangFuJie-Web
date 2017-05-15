@@ -7,7 +7,7 @@ module.exports = {
      */
     async getSixNewsData() {
         console.log('获取news');
-        let data = await newsModel.getSixNews();
+        let data = await newsModel.getHomeNews();
         return data
             ? {
                 mainTitle: newsData.mainTitle,

@@ -29,6 +29,7 @@ module.exports = {
         const about = frontEndIndex.about;
         const ftConfig = frontFooterConfig;
 
+        // ctx.body = results;
         ctx.body = frontView.compiledIndexFn({
             websitTitle: frontEndIndex.websitTitle,
             banner,
@@ -40,6 +41,17 @@ module.exports = {
             ftConfig,
             linkHrefs,
             contactUs: frontEndIndex.contactUs
+        });
+    },
+    async casePage(ctx) {
+        console.log('case');
+        console.log(ctx.params);
+        let id = ctx.params.id;
+
+        ctx.body = frontView.compiledCaseFn({
+            ftConfig: frontFooterConfig,
+            linkHrefs,
+            caseData: require('../mock/case' + id)
         });
     },
     async loginPage(ctx) {

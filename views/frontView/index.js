@@ -7,6 +7,11 @@ function compiledIndexFn(locals = {}) {
     return pug.compileFile(path.join(__dirname, '/pages/index.pug'))(locals);
 }
 
+function compiledCaseFn(locals = {}) {
+    return pug.compileFile(path.join(__dirname, '/pages/case.pug'))(locals);
+}
+
 module.exports = {
-    compiledIndexFn
+    compiledIndexFn,
+    compiledCaseFn
 };

@@ -1,7 +1,7 @@
 const {dbUtils} = require('../utils');
 const _ = require('lodash');
 const news = {
-    async getSixNews() {
+    async getHomeNews() {
         console.log('news');
         let sql = 'SELECT ' +
                     '`id`, ' +
@@ -12,10 +12,10 @@ const news = {
                   'FROM `news` ' +
                   'WHERE `is_active` = 1 '
                   'ORDER BY `created_date` DESC ' +
-                  'LIMIT 0,6';
+                  'LIMIT 0,4';
         let result = await dbUtils.query(sql);
         if (!_.isArray(result)) return null;
-        if (result.length !== 6) return null;
+        // if (result.length !== 6) return null;
         return result;
     }
 }

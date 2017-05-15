@@ -1,3 +1,6 @@
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+}
 img {
     width: 100%;
 }
@@ -150,8 +153,11 @@ a {
     margin-bottom: 30px;
 }
 
+.m-case-text-wrap {
+    margin: 16px 0 30px 0;
+}
+
 .m-case-title {
-    margin-top: 8px;
     font-size: 18px;
     line-height: 24px;
 }
@@ -267,6 +273,7 @@ a {
 }
 
 .m-news-text__date {
+    margin-top: 15px;
     color: #969696;
 }
 
@@ -316,4 +323,23 @@ a {
     margin-top: 8px;
     font-size: 16px;
 }
+
+/*案例文章*/
+.m-case-content {
+    margin: 60px 0;
+}
+
+.m-case-content-img-wrap {
+    margin-top: 30px;
+}
+.m-case-content-img-wrap > img {
+    max-width: 100%;
+    width: auto;
+}
+
+
+.m-case-info li {
+    margin-top: 14px;
+}
+/*end*/
 

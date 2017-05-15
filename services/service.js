@@ -7,7 +7,7 @@ module.exports = {
      */
     async getSixServiceData() {
         console.log('获取服务信息');
-        let data = await serviceModel.getSixServices();
+        let data = await serviceModel.getHomeServices();
         return data 
             ? {
                 mainTitle: serviceData.mainTitle,

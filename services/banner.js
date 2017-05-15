@@ -7,7 +7,8 @@ module.exports = {
      */
     async getFourBannerData() {
         console.log('执行banner');
-        let data = await bannerModel.getFourBanners();
+        let data = await bannerModel.getHomeBanners();
+        console.log(data);
         return data
             ? {
                 defaultAlt: bannerData.defaultAlt,

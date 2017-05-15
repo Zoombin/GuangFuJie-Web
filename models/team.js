@@ -1,7 +1,7 @@
 const {dbUtils} = require('../utils');
 const _ = require('lodash');
 const team = {
-    async getTeams() {
+    async getIndexTeams() {
         console.log('team');
         let sql = 'SELECT ' +
                     '`id`, ' +

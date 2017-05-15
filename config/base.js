@@ -1,13 +1,4 @@
 module.exports = {
-    cdn: {
-        js: [
-            'http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js',
-            'http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js'
-        ],
-        css: [
-            'http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css'
-        ]
-    },
     frontEndIndex: {
         websitTitle: '高得光伏',
         banner: {
@@ -57,9 +48,9 @@ module.exports = {
     frontFooterConfig: {
         footerLogo: '/images/logo2.png',
         footerInfo: {
-            companyName: '江苏高得光伏电力有限公司',
-            tel: '400-6229-666',
-            email: 'info@gaodesolar.com',
+            companyName: '高得太阳能光伏电力（昆山）有限公司',
+            tel: '15825566666',
+            email: '15825566666@163.com',
             address: '江苏省昆山市玉山镇前进西路119号长城国际大厦1702室',
             qrcodeUrl: '/images/qrcode.png',
             qrcodeText: '官方微信',
@@ -67,6 +58,7 @@ module.exports = {
                 '/js/jquery.min.js',
                 '/js/bootstrap.min.js',
                 '/js/slick.min.js',
+                '/js/pnotify.js',
                 '/js/main.js'
             ]
         }
@@ -74,6 +66,7 @@ module.exports = {
     linkHrefs: {
         bootstrap: '/css/bootstrap.min.css',
         slick: '/css/slick.css',
+        pnotify: '/css/pnotify.css',
         main: '/css/main.css'
     }
 }
