@@ -1,0 +1,37 @@
+{
+  "name": "WebSite-Koa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "local": "cross-env NODE_ENV=local nodemon app.js",
+    "dev": "cross-env NODE_ENV=develop nodemon app.js",
+    "prod": "cross-env NODE_ENV=production node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "busboy": "^0.2.14",
+    "jquery": "^2.2.4",
+    "koa": "^2.2.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-compress": "^2.0.0",
+    "koa-favicon": "^2.0.0",
+    "koa-mysql-session": "0.0.2",
+    "koa-router": "^7.1.1",
+    "koa-session-minimal": "^3.0.4",
+    "koa-static": "^3.0.0",
+    "koa-views": "^6.0.2",
+    "lodash": "^4.17.4",
+    "mysql": "^2.13.0",
+    "pug": "^2.0.0-rc.1"
+  },
+  "devDependencies": {
+    "cross-env": "^5.0.0",
+    "koa-logger": "^2.0.1",
+    "nodemon": "^1.11.0"
+  }
+}

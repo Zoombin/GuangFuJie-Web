@@ -1,0 +1,29 @@
+doctype html
+html
+    head
+        title 后台登录
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        link(rel='stylesheet', href='/css/bootstrap.min.css')
+        link(rel='stylesheet', href='/css/pnotify.css')
+        link(rel='stylesheet', href='/css/login.css')
+    body
+        div(style={'margin-top': '5%'})
+            div.container
+                legend 管理员登录
+                form.form-horizontal
+                    div.form-group.input-group
+                        span.input-group-addon
+                            i.glyphicon.glyphicon-user
+                        input#name.form-control(type='text', name='userName', placeholder='用户名')/
+                    div.form-group.input-group
+                        span.input-group-addon
+                            i.glyphicon.glyphicon-lock
+                        input#psd.form-control(type='password', name='password', placeholder='密码')/
+                    div.form-group
+                        div.col-sm-4.col-sm-offset-4
+                            button#login-btn.btn.btn-success(type='button', style={'width': '100%'}) 登录
+        script(src='/js/jquery.min.js')
+        script(src='/js/bootstrap.min.js')
+        script(src='/js/pnotify.js')
+        script(src='/js/login.js')

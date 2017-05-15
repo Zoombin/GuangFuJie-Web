@@ -1,0 +1,101 @@
+extends ../layout
+block content
+    //- 轮播图部分
+    div.m-banner-wrap
+        div.container
+            div.m-banner
+                each imgUrl in banner.imgs
+                    img(src=imgUrl, alt=banner.defaultAlt)/
+            div.m-banner-dots-wrap
+    
+    //- 服务
+    div.m-service
+        div.container
+            div.maintitle #{service.mainTitle}
+            div.grayline
+            div.row
+                each item in service.items
+                    div.col-sm-4.m-service-item-wrap
+                        a(href=item.link)
+                            img(src=item.src, alt=service.defaultAlt)/
+                        p.text-center.m-service-desc #{item.title}
+    
+    //- 联系我们
+    div.m-contactus
+        div.container
+            div.maintitle #{contactUs.mainTitle}
+            div.grayline
+            div.row
+                each item in contactUs.list
+                    div.col-sm-3.m-contact-serviceitem
+                        div.subtitle #{item.title}
+                        ul
+                            each text in item.texts
+                                li #{text}
+            div.row
+                include ../includes/contactus.pug
+    
+    //- 成功案例
+    div.m-case
+        div.container
+            div.maintitle #{successCase.mainTitle}
+            div.grayline
+            div.row
+                mixin successCase(item, alt)
+                    a(href=item.link)
+                        img(src=item.src, alt=alt)
+                    div.m-case-text-wrap
+                        div.m-case-title!=item.title
+                        div.m-case-desc!=item.desc
+                div.col-sm-6
+                    +successCase(successCase.big, successCase.defaultAlt)
+                div.col-sm-6
+                    div.row
+                        each item in successCase.smallFirstRow
+                            div.col-sm-6
+                                +successCase(item, successCase.defaultAlt)
+                    div.row
+                        each item in successCase.smallSecondRow
+                            div.col-sm-6
+                                +successCase(item, successCase.defaultAlt)
+    
+    div.m-team
+        div.container
+            div.maintitle #{team.mainTitle}
+            div.grayline
+            div.m-team-slick
+                each item in team.items
+                    div.m-team-slick-item
+                        img(src=item.src, alt=team.defaultAlt)
+                        div.m-team-item-text
+                            div.m-team-item-text__name #{item.name}
+                            div.m-team-item-text__job #{item.job}
+                            div.m-team-item-text__desc #{item.desc}
+                div.m-team-slick-prev
+                    span.glyphicon.glyphicon-chevron-left.m-team-slick-arrow
+                div.m-team-slick-next
+                    span.glyphicon.glyphicon-chevron-right.m-team-slick-arrow
+    
+    div.m-news
+        div.container
+            div.maintitle #{news.mainTitle}
+            div.grayline
+            div.row
+                each item in news.items
+                    div.col-sm-4.m-news-item
+                        div.row
+                            div.col-sm-6
+                                a(href=item.link)
+                                    img(src=item.src, alt=news.defaultAlt)/
+                            div.col-sm-6.m-news-text
+                                div.m-news-text__title #{item.title}
+                                div.m-news-text__date #{item.date}
+
+    div.m-about
+        div.container
+            div.maintitle #{about.mainTitle}
+            div.grayline
+            each item in about.sections
+                p #{item}
+    
+                

@@ -1,0 +1,77 @@
+html {
+    background-color: #f5f5f5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: antialiased;
+    min-width: 300px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+body {
+    color: #4a4a4a;
+    background-color: transparent;
+}
+
+/*重写部分bootstrap样式*/
+
+.nav-pills>li.active>a,
+.nav-pills>li.active>a:focus,
+.nav-pills>li.active>a:hover {
+    background-color: #00e676;
+}
+
+.nav-pills>li>a {
+    color: #00c853;
+}
+
+/*重写end*/
+
+.m-navbar {
+    background-color: #fff;
+    border: none;
+    box-shadow: 0 2px 3px hsla(0, 0%, 7%, .1), 0 0 0 1px hsla(0, 0%, 7%, .1);
+}
+
+.m-side-menu {
+    position: fixed;
+    top: 50px;
+    left: 0;
+    bottom: 0;
+    padding: 20px 0 50px;
+    width: 180px;
+    min-width: 45px;
+    height: calc(100% - 50px);
+    z-index: 1029;
+    background-color: #fff;
+    box-shadow: 0 2px 3px hsla(0, 0%, 7%, .1), 0 0 0 1px hsla(0, 0%, 7%, .1);
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.m-main {
+    padding-top: 50px;
+    margin-left: 180px;
+}
+
+.m-tab-content-wrap {
+    background-color: transparent;
+}
+
+.m-tab-content-wrap > .tab-content {
+    padding-top: 15px;
+}
+
+#test1,
+#test2,
+#test3 {
+    /*height: 200px;*/
+}
+
+.m-tab-content-wrap > .tab-content > .tab-pane {
+    background-color: #fff;
+    padding: 15px;
+    box-shadow: 0 2px 3px hsla(0,0%,4%,.1), 0 0 0 1px hsla(0,0%,4%,.1);
+    border-radius: 2px;
+}
+
+

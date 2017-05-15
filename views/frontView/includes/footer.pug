@@ -1,0 +1,21 @@
+footer.m-footer
+    div.container
+        div.row
+            div.col-sm-7
+                div.row
+                    div.col-sm-3
+                        img.m-footer-logo(src=ftConfig.footerLogo)/
+                    div.col-sm-9
+                        div.m-footer__info
+                            div.name #{ftConfig.footerInfo.companyName}
+                            ul.list
+                                li.tel #{'联系方式：' + ftConfig.footerInfo.tel}
+                                li.email #{'电子邮箱：' + ftConfig.footerInfo.email}
+                                li.address #{'地址：' + ftConfig.footerInfo.address}
+            div.col-sm-5.text-center
+                div.col-sm-4.col-sm-offset-4
+                    div.m-footer-qrcode
+                        img(src=ftConfig.footerInfo.qrcodeUrl)
+                        div.text #{ftConfig.footerInfo.qrcodeText}
+each item in ftConfig.footerInfo.scripts
+    script(src=item)

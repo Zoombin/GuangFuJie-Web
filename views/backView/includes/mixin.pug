@@ -1,0 +1,27 @@
+mixin commonTable(options) 
+    include ./toolbar
+    table(
+        id = options.id,
+        data-classes = 'table table-hover table-no-bordered',
+        data-response-handler = options.resHandler,
+        data-toggle = 'table',
+        data-url = options.url,
+        data-search = options.search,
+        data-show-refresh = options.showRefresh,
+        data-show-toggle = options.showToggle,
+        data-show-columns = options.showColumns,
+        data-toolbar = '#m-toolbar',
+        data-height = options.height,
+        data-pagination = options.pagination,
+        data-page-list = options.pageList,
+        data-side-pagination = options.sidePagination
+    )
+        thead
+            tr
+                each item in options.ths
+                    th(
+                        data-field=item.fieldName, 
+                        data-visible=item.visible,
+                        data-formatter=item.formatter
+                    ) !{item.text}
+    
