@@ -16,7 +16,6 @@
   "dependencies": {
     "bluebird": "^3.5.0",
     "busboy": "^0.2.14",
-    "jquery": "^2.2.4",
     "koa": "^2.2.0",
     "koa-bodyparser": "^4.2.0",
     "koa-compress": "^2.0.0",
