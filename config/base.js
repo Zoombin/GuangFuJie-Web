@@ -34,8 +34,8 @@ module.exports = {
             defaultAlt: '团队成员'
         },
         news: {
-            mainTitle: '高得咨询',
-            defaultAlt: '咨询信息'
+            mainTitle: '高得资讯',
+            defaultAlt: '资讯信息'
         },
         about: {
             mainTitle: '关于高得',

@@ -27,7 +27,8 @@
     "koa-views": "^6.0.2",
     "lodash": "^4.17.4",
     "mysql": "^2.13.0",
-    "pug": "^2.0.0-rc.1"
+    "pug": "^2.0.0-rc.1",
+    "qiniu": "^6.1.13"
   },
   "devDependencies": {
     "cross-env": "^5.0.0",
