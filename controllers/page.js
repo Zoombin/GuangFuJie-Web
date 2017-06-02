@@ -44,8 +44,6 @@ module.exports = {
         });
     },
     async casePage(ctx) {
-        console.log('case');
-        console.log(ctx.params);
         let id = ctx.params.id;
 
         ctx.body = frontView.compiledCaseFn({
@@ -55,7 +53,6 @@ module.exports = {
         });
     },
     async loginPage(ctx) {
-        console.log(ctx.session);
         ctx.body = backEndView.compiledLogInFn();
     },
     async adminPage(ctx) {

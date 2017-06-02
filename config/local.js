@@ -5,6 +5,6 @@ module.exports = {
         host: 'localhost',
         user: 'root',
         password: 'wfh_linux',
-        db: 'website'
+        db: 'website-gfj'
     }
 };
