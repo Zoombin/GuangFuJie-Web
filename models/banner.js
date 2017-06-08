@@ -26,7 +26,7 @@ const banner = {
     //     return result;
 
     // },
-    async getLimitBannersSortByOneField(sort = 'sort_order', offset = 0, limit = 10, order = 'DESC') {
+    async getLimitBannersSortByOneField(offset = 0, limit = 10, sort = 'sort_order', order = 'DESC') {
         // let offset = data.offset || 0;
         // let limit = data.limit || 10;
         // let order = data.order || 'DESC';

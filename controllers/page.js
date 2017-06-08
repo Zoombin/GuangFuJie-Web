@@ -7,7 +7,7 @@ const {
 } = require('../services');
 const Promise = require('bluebird');
 const {frontFooterConfig, frontEndIndex, linkHrefs} = require('../config/base');
-const {frontView, backEndView} = require('../views');
+const {frontView, backEndView, renderAdminFile} = require('../views');
 module.exports = {
     async indexPage(ctx) {
         // 执行时间取决于最耗时的Promise
@@ -54,11 +54,11 @@ module.exports = {
             caseData: require('../mock/case' + id)
         });
     },
-    async loginPage(ctx) {
-        console.log(ctx.session);
-        ctx.body = backEndView.compiledLogInFn();
-    },
+    // async loginPage(ctx) {
+    //     console.log(ctx.session);
+    //     ctx.body = backEndView.compiledLogInFn();
+    // },
     async adminPage(ctx) {
-        ctx.body = backEndView.compiledAdminFn();
+        ctx.body = await renderAdminFile();
     }
 }

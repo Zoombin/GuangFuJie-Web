@@ -26,18 +26,18 @@ module.exports = {
         let order = data.order;
         let sort = data.sort;
 
-        let res = await bannerModel.getLimitBannersSortByOneField(sort, offset, limit, order);
-        console.log(res);
+        let res = await bannerModel.getLimitBannersSortByOneField(offset, limit, sort, order);
+
         let bannerRes = res[0];
         let countRes = res[1];
         let total = countRes[0].count;
 
-        bannerRes = bannerRes.map((value, index) => {
-            value.index = index + 1;
-            // value.is_active = value.is_active === 1 ? '是' : '否';
-            // value.src = '<a href='+ value.src +'>查看图片</a>';
-            return value;
-        });
+        // bannerRes = bannerRes.map((value, index) => {
+        //     value.index = index + 1;
+        //     // value.is_active = value.is_active === 1 ? '是' : '否';
+        //     // value.src = '<a href='+ value.src +'>查看图片</a>';
+        //     return value;
+        // });
 
         return {
             total,

@@ -8,20 +8,21 @@ module.exports = {
             success: false,
             msg: '',
             data: null,
-            code: ''
+            code: 0
         };
-        console.log(params);
+        // console.log(params);
         // console.log(_.has(params, 'offset'));
         // console.log(_.has(params, 'limit'));
         // console.log(_.has(params, 'order'));
-        if (!params.offset || !params.limit || !params.order || !params.sort) {
+        if (!params.offset || !params.limit) {
             result.code = 'INVALID_PARAM';
             result.msg = pageCode.INVALID_PARAM;
         } else {
             let bannerData = await bannerService.getPagitionBannerData({
                 offset: params.offset,
                 limit: params.limit,
-                order: params.order
+                order: params.order,
+                sort: params.sort
             });
 
             result.success = true;

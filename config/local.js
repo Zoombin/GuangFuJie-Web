@@ -6,5 +6,11 @@ module.exports = {
         user: 'root',
         password: 'wfh_linux',
         db: 'website'
+    },
+    qiniu: {
+        bucket: 'guangfujie',
+        accessKey: 'zrAvv0stUaPwrAYiaSuVgvsUSgajrFDcJoIn62Vp',
+        secretKey: '8onamuD2Evcu6nzoozjydlRL0oybHrRuc45fy_yA',
+        domainUrl: 'http://ob4e8ww8r.bkt.clouddn.com/'
     }
 };
