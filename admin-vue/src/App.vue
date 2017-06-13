@@ -8,11 +8,14 @@
             <div class="container">
                 <div class="header">
                     <!--<m-bread></m-bread>-->
+                    <div class="header-nav">
+
+                    </div>
                 </div>
 
-
-                <m-banner-table></m-banner-table>
-                <el-upload 
+                <router-view></router-view>
+                <m-switch-column state true-text="已激活" false-text="未激活"></m-switch-column>
+                <!--<el-upload 
                     class="upload-demo"
                     ref="upload"
                     action="http://upload.qiniu.com/"
@@ -27,18 +30,20 @@
                     <el-button slot="trigger" size="small" type="parmary">选取文件</el-button>
                     <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传</el-button>
                     <div slot="tip" class="el-upload__tip">东方丽都司法局第三方</div>
-                </el-upload>
-                <router-view></router-view>
+                </el-upload>-->
+                
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import MSwitchColumn from 'base/column/toggle-column.vue';
     import MHeader from 'base/header/header';
     import MSideMenu from 'base/side-menu/side-menu';
-    import MBread from 'base/bread/bread';
-    import MBannerTable from 'components/banner-table/banner-table';
+    // import MBread from 'base/bread/bread';
+    // import MBannerTable from 'components/banner-table/banner-table';
+    // import MToolBar from 'base/toolbar/toolbar';
 
     import axios from 'axios';
 
@@ -46,8 +51,10 @@
         components: {
             MHeader,
             MSideMenu,
-            MBread,
-            MBannerTable
+            MSwitchColumn
+            // MBread,
+            // MBannerTable,
+            // MToolBar
         },
         data() {
             return {

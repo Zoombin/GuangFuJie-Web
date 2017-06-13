@@ -12,6 +12,12 @@ const contactUs = {
         let result = await dbUtils.query(sql, values);
         if (!result.affectedRows === 1) result = null;
         return result;
+    },
+    async getLimitSortByOneField(offset = 0, limit = 10, sort = 'created_date', order = 'DESC') {
+        let subSql = 'SELECT * FROM `contactus` ORDER BY ' + sort + ' ' + order.toUpperCase();
+        let result = await dbUtils.getListAndCount(subSql, offset, limit);
+        if (_.isArray(result) && result.length === 2) return result;
+        else return null;
     }
 }
 

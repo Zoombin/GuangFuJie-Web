@@ -23,7 +23,17 @@ import {
     Table,
     TableColumn,
     Upload,
-    Button
+    Button,
+    Form,
+    FormItem,
+    Input,
+    Option,
+    DatePicker,
+    Slider,
+    Switch,
+    Pagination,
+    Loading,
+    Dialog
 } from 'element-ui';
 
 Vue.use(Row);
@@ -41,6 +51,19 @@ Vue.use(Table);
 Vue.use(TableColumn);
 Vue.use(Upload);
 Vue.use(Button);
+Vue.use(Form);
+Vue.use(FormItem);
+Vue.use(Option);
+Vue.use(DatePicker);
+Vue.use(Slider);
+Vue.use(Input);
+Vue.use(Switch);
+Vue.use(Pagination);
+Vue.use(Loading);
+Vue.use(Dialog);
+
+
+// console.log(Message);
 // Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
