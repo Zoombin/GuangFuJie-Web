@@ -52,16 +52,10 @@ module.exports = {
             caseData: require('../mock/case' + id)
         });
     },
-<<<<<<< HEAD
-    async loginPage(ctx) {
-        ctx.body = backEndView.compiledLogInFn();
-    },
-=======
     // async loginPage(ctx) {
     //     console.log(ctx.session);
     //     ctx.body = backEndView.compiledLogInFn();
     // },
->>>>>>> website-template
     async adminPage(ctx) {
         ctx.body = await renderAdminFile();
     }
