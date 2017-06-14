@@ -1,5 +1,6 @@
 const bannerService = require('../services/banner');
 const pageCode = require('../codes/pagition');
+const bannerCode = require('../codes/banner');
 const _ = require('lodash');
 module.exports = {
     async bannerPagition(ctx) {
@@ -28,6 +29,36 @@ module.exports = {
             result.success = true;
             result.msg = '操作成功';
             result.data = bannerData;
+        }
+
+        ctx.body = result;
+    },
+    async insertBanner(ctx) {
+        let params = ctx.request.body;
+        let result = {
+            success: false,
+            msg: '',
+            data: null,
+            code: 0
+        };
+        let { src, isActive, sortOrder } = params;
+        if (!src) {
+            result.code = 'INVALID_PARAM';
+            result.msg = bannerCode.INVALID_PARAM;
+        } else {
+            let bannerRes = await bannerService.insertBannerData({
+                src,
+                isActive,
+                sortOrder
+            });
+            if (!bannerRes) {
+                result.code = 'ERROR_SYS';
+                result.msg = bannerCode.ERROR_SYS;
+            } else {
+                result.success = true;
+                result.msg = '操作成功';
+                result.data = bannerRes;
+            }
         }
 
         ctx.body = result;

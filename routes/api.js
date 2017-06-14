@@ -16,6 +16,7 @@ const router = new Router();
 
 router.post('/user/signin', userCtr.signIn);
 router.get('/banner/list', bannerCtr.bannerPagition);
+router.post('/banner/create', bannerCtr.insertBanner);
 router.get('/case/list', caseCtr.casePagition);
 router.get('/contactus/list', contactUsCtr.contactPagition);
 

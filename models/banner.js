@@ -24,6 +24,15 @@ const banner = {
 
         if (_.isArray(result) && result.length === 2) return result;
         else return null;
+    },
+    async insertNewBanner(src = '', isActive = 1, sortOrder = 50) {
+        let result = await dbUtils.insertData(
+                ['banner'], 
+                ['src', 'is_active', 'sort_order'], 
+                [src, isActive, sortOrder]
+        );
+        if (_.isObject(result) && result.affectedRows === 1) return result;
+        else return null;
     }
 }
 

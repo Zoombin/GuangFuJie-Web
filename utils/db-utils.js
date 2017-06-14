@@ -39,11 +39,14 @@ let findPartDataById = function(table, columns, id) {
 
 let findDataByPage = function(table, keys, start, end) {
     let  sql =  "SELECT ?? FROM ??  LIMIT ? , ?"
-    return query( sql, [keys,  table,  start, end ] )
+    return query(sql, [keys,  table,  start, end ]);
 }
 
 let insertData = function(table, fields, values) {
-    // let sql = 'INSERT '
+    let len = values.length;
+    let array = new Array(len).fill('?');
+    let sql = 'INSERT INTO ?? (??, `created_date`, `update_date`) VALUES('+ array.join(',') +', NOW(), NOW())';
+    return query(sql, [table, fields, ...values]);
 }
 
 let getCount = function(table) {
@@ -83,7 +86,14 @@ module.exports = {
     findAllDataById,
     findPartDataById,
     getCount,
+    insertData,
     getCountBySubSql,
     deleteDataById,
     getListAndCount
-}
+};
+// insertData(['banner'], ['src', 'link', 'title'], ['1', '2', '3']).then(rows => {
+//     console.log(rows);
+// }).catch(error => console.log(error));
+
+// let array = new Array(6).fill('?');
+// console.log(array.join(','));

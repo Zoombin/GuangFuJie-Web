@@ -43,5 +43,9 @@ module.exports = {
             total,
             rows: bannerRes
         };
+    },
+    async insertBannerData({src, isActive, sortOrder}) {
+        let res = await bannerModel.insertNewBanner(src, isActive, sortOrder);
+        return res ? true : false;
     }
 }
