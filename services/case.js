@@ -42,5 +42,22 @@ module.exports = {
             smallFirstRow: data[1][0],
             smallSecondRow: data[1][1]
         };
+    },
+    async getPagitionCaseData(data = {}) {
+        let offset = data.offset;
+        let limit = data.limit;
+        let order = data.order;
+        let sort = data.sort;
+
+        let res = await successCaseModel.getLimitCasesSortByOneField(offset, limit, sort, order);
+
+        let caseRes = res[0];
+        let countRes = res[1];
+        let total = countRes[0].count;
+
+        return {
+            total,
+            rows: caseRes
+        };
     }
 }

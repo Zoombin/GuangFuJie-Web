@@ -5,6 +5,16 @@ module.exports = {
         host: 'localhost',
         user: 'root',
         password: 'Dsh12345',
+<<<<<<< HEAD
         db: 'website-gfj'
+=======
+        db: 'website'
+    },
+    qiniu: {
+        bucket: 'guangfujie',
+        accessKey: 'zrAvv0stUaPwrAYiaSuVgvsUSgajrFDcJoIn62Vp',
+        secretKey: '8onamuD2Evcu6nzoozjydlRL0oybHrRuc45fy_yA',
+        domainUrl: 'http://ob4e8ww8r.bkt.clouddn.com/'
+>>>>>>> website-template
     }
 };

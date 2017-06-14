@@ -35,6 +35,20 @@ const successCase = {
         if (!_.isArray(result)) return null;
         if (result.length !== 4) return null;
         return result;
+    },
+    async getLimitCasesSortByOneField(offset = 0, limit = 10, sort = 'sort_order', order = 'DESC') {
+        let subSql = 'SELECT * FROM `case` ORDER BY ' + sort + ' ' + order.toUpperCase();
+        // let limitSql = subSql + ' LIMIT ?, ?';
+        // let countSql = 'SELECT COUNT(*) as `count` FROM ('+ subSql +') t';
+
+        // let result = await Promise.all([
+        //     dbUtils.query(limitSql, [offset * limit * 1, limit * 1]),
+        //     dbUtils.query(countSql)
+        // ]).catch(error => console.log(error));
+        let result = await dbUtils.getListAndCount(subSql, offset, limit);
+
+        if (_.isArray(result) && result.length === 2) return result;
+        else return null;
     }
 }
 

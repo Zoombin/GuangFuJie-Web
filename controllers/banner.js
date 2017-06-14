@@ -1,5 +1,6 @@
 const bannerService = require('../services/banner');
 const pageCode = require('../codes/pagition');
+const bannerCode = require('../codes/banner');
 const _ = require('lodash');
 module.exports = {
     async bannerPagition(ctx) {
@@ -8,25 +9,56 @@ module.exports = {
             success: false,
             msg: '',
             data: null,
-            code: ''
+            code: 0
         };
-        console.log(params);
+        // console.log(params);
         // console.log(_.has(params, 'offset'));
         // console.log(_.has(params, 'limit'));
         // console.log(_.has(params, 'order'));
-        if (!params.offset || !params.limit || !params.order || !params.sort) {
+        if (!params.offset || !params.limit) {
             result.code = 'INVALID_PARAM';
             result.msg = pageCode.INVALID_PARAM;
         } else {
             let bannerData = await bannerService.getPagitionBannerData({
                 offset: params.offset,
                 limit: params.limit,
-                order: params.order
+                order: params.order,
+                sort: params.sort
             });
 
             result.success = true;
             result.msg = '操作成功';
             result.data = bannerData;
+        }
+
+        ctx.body = result;
+    },
+    async insertBanner(ctx) {
+        let params = ctx.request.body;
+        let result = {
+            success: false,
+            msg: '',
+            data: null,
+            code: 0
+        };
+        let { src, isActive, sortOrder } = params;
+        if (!src) {
+            result.code = 'INVALID_PARAM';
+            result.msg = bannerCode.INVALID_PARAM;
+        } else {
+            let bannerRes = await bannerService.insertBannerData({
+                src,
+                isActive,
+                sortOrder
+            });
+            if (!bannerRes) {
+                result.code = 'ERROR_SYS';
+                result.msg = bannerCode.ERROR_SYS;
+            } else {
+                result.success = true;
+                result.msg = '操作成功';
+                result.data = bannerRes;
+            }
         }
 
         ctx.body = result;

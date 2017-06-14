@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "local": "cross-env NODE_ENV=local nodemon app.js",
-    "dev": "cross-env NODE_ENV=develop nodemon app.js",
-    "prod": "cross-env NODE_ENV=production node app.js",
+    "client:dev": "cd admin-vue && npm run dev",
+    "client:build": "cd admin-vue && npm run build",
+    "server:local": "cross-env NODE_ENV=local nodemon app.js",
+    "server:dev": "cross-env NODE_ENV=develop nodemon app.js",
+    "server:prod": "cross-env NODE_ENV=production node app.js",
     "pm2:prod": "cross-env NODE_ENV=production pm2 start app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -27,6 +29,7 @@
     "koa-views": "^6.0.2",
     "lodash": "^4.17.4",
     "mysql": "^2.13.0",
+    "node-qiniu": "^6.2.0",
     "pug": "^2.0.0-rc.1",
     "qiniu": "^6.1.13"
   },
