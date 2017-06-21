@@ -6,13 +6,4 @@ export default class Banner {
         this.sortOrder = sortOrder;
         this.createDate = createDate;
     }
-
-    static getProps() {
-        return [
-            'imgSrc',
-            'activeState',
-            'sortOrder',
-            'createDate'
-        ];
-    }
 }

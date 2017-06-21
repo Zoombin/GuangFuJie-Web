@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-button title="查看" @click.native="view" type="primary" icon="view" size="small"></el-button>
+        <el-button v-if="showViewIcon" title="查看" @click.native="view" type="primary" icon="view" size="small"></el-button>
         <el-button title="编辑" @click.native="edit" type="primary" icon="edit" size="small"></el-button>
         <el-button v-if="showContentIcon" title="文章编辑" @click.native="editContent" type="primary" icon="document" size="small"></el-button>
         <el-button title="删除" @click.native="del" type="danger" icon="delete2" size="small"></el-button>
@@ -17,6 +17,10 @@
                 }
             },
             showContentIcon: {
+                type: Boolean,
+                default: false
+            },
+            showViewIcon: {
                 type: Boolean,
                 default: false
             }

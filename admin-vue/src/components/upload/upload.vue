@@ -12,13 +12,14 @@
         >
             <img v-if="imageUrl" :src="imageUrl" :style="imgSty"/>
             <i v-else class="el-icon-plus" :style="iconSty"></i>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过1mb</div>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过1mb，尺寸 {{ size }}</div>
         </el-upload>
     </div>
 </template>
 
 <script type="text/ecmascript-6">
     import { guid, getExt } from 'common/js/utils';
+    import { Message } from 'element-ui';
     import axios from 'axios';
     export default {
         data() {
@@ -54,6 +55,10 @@
                 default: 400
             },
             imageUrl: {
+                type: String,
+                default: ''
+            },
+            size: {
                 type: String,
                 default: ''
             }
@@ -98,7 +103,7 @@
                 const isLt1M = (file.size / 1024 / 1024) <= 1;
 
                 if (!isJPG && !isPNG) {
-                    this.$message({
+                    Message({
                         message: '上传图片只能是 PNG/JPG 格式!',
                         type: 'warning'
                     });
@@ -106,7 +111,7 @@
                 }
 
                 if (!isLt1M) {
-                    this.$message({
+                    Message({
                         message: '上传图片大小不能超过 1mb!',
                         type: 'warning'
                     });

@@ -5,6 +5,7 @@ const home = require('./home');
 // const login = require('./login');
 const api = require('./api');
 const admin = require('./admin');
+const ue = require('./ue');
 
 router.use('/', home.routes(), home.allowedMethods());
 // router.use('/login', login.routes(), login.allowedMethods());
@@ -18,4 +19,5 @@ router.use('/', home.routes(), home.allowedMethods());
 // }, admin.routes(), admin.allowedMethods());
 router.use('/admin', admin.routes(), admin.allowedMethods());
 router.use('/api', api.routes(), home.allowedMethods());
+router.use('/ue', ue.routes(), ue.allowedMethods());
 module.exports = router;

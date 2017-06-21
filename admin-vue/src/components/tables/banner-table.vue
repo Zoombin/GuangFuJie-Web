@@ -1,22 +1,36 @@
 <template>
     <div>
         <m-tool-bar style="margin-bottom: 10px;"
-                    @new="handleCreateNew"></m-tool-bar>
+                    @new="handleCreateNew"
+                    @batchDelete="handleBatchDel"></m-tool-bar>
         <m-table
             v-loading="loading"
             :data="data"
             :action-width="300"
-            @view="view"
+            @selectionChange="handleSelectionChange"
             @edit="edit"
             @del="del">
-            <el-table-column
-                v-for="(item, index) in columns" 
-                :key="item.prop"
-                :label="item.label"
-                :prop="item.prop"
-                :width="item.width"
-            >
-            </el-table-column>
+            <template v-for="(item, index) in columns">
+                <el-table-column
+                    v-if="!item._custom"
+                    :key="item.prop"
+                    :label="item.label"
+                    :prop="item.prop"
+                    :width="item.width"
+                >
+                </el-table-column>
+                <el-table-column 
+                    v-else-if="item._view='popover-column'"
+                    :key="item.prop"
+                    :label="item.label"
+                    :prop="item.prop"
+                    :width="item.width"
+                >
+                    <template scope="scope">
+                        <popover-column :image-url="scope.row.imgSrc" text="图片"></popover-column>
+                    </template>
+                </el-table-column>
+            </template>
         </m-table>
         <div style="text-align: center; margin-top: 15px;">
             <el-pagination v-show="(total / data.length) > 1" 
@@ -26,10 +40,11 @@
                         @current-change="handleCurrentPageChange">
             </el-pagination>
         </div>
-        <el-dialog :title="dialogTitle" :visible.sync="visible" :size="dialogSize">
+        <el-dialog @close="onReset" :title="dialogTitle" :visible.sync="visible" :size="dialogSize">
             <el-form ref="form" :rules="rules" :model="formData" :label-width="labelWidth + 'px'">
                 <el-form-item label="上传图片">
                     <m-upload filePrefix="banner-" 
+                              size="1200/500"
                               :ratio="2.4"
                               :img-width="300"
                               :image-url="formData.imgUrl"
@@ -49,7 +64,7 @@
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="onSubmit('form')" :loading="isUploadingData">{{ submitText }}</el-button>
-                    <el-button @click="onReset('form')">重置</el-button>
+                    <el-button @click="onReset">清空</el-button>
                 </el-form-item>
             </el-form>
         </el-dialog>
@@ -59,6 +74,7 @@
 <script type="text/ecmascript-6">
     import { Message } from 'element-ui';
     import MTable from 'base/table/table';
+    import PopoverColumn from 'base/column/popover-column';
     import Banner from 'common/js/banner';
     import MUpload from 'components/upload/upload';
     import { bannerColumns } from 'common/js/config';
@@ -81,7 +97,7 @@
                 dialogSize: 'tiny',
                 labelWidth: 100,
                 formData: {
-                    isActive: true,
+                    isActive: false,
                     sortOrder: 50,
                     imgUrl: ''
                 },
@@ -104,20 +120,17 @@
                 return this.isCreate ? '立即创建' : '保存';
             }
         },
+        beforeCreate() {
+            this.currentId = -1;
+            this.domainUrl = '';
+            this.currentSelectedIds = [];
+        },
         created() {
             // console.log(this.$message);
             this._getList();
         },
         methods: {
-            view(index, row, col, store) {
-                console.log(row.id);
-            },
             edit(index, row, col, store) {
-                // formData: {
-                //     isActive: true,
-                //     sortOrder: 50,
-                //     imgUrl: ''
-                // },
                 this.currentId = row.id;
                 this.formData.isActive = row.activeState === '已激活';
                 this.formData.sortOrder = row.sortOrder;
@@ -127,11 +140,33 @@
             },
             del(index, row, col, store) {
                 console.log(row.id);
+                this._batchDelete(row.id);
+            },
+            handleBatchDel() {
+                if (!this.currentSelectedIds.length) {
+                    Message({
+                        message: '请先勾选',
+                        type: 'warning'
+                    });
+                    return;
+                } else {
+                    this._batchDelete(this.currentSelectedIds);
+                }
+            },
+            handleSelectionChange(selection) {
+                this.currentSelectedIds = selection.map(item => item.id);
+                console.log(this.currentSelectedIds);
             },
             handleCurrentPageChange(pageNum) {
                 this.offset = pageNum - 1;
             },
             handleCreateNew() {
+                // 重置初始值，避免与edit冲突
+                console.log('create reset');
+                // this.formData.isActive = true;
+                // this.formData.sortOrder = 50;
+                // this.formData.imgUrl = '';
+
                 this.isCreate = true;
                 this.visible = true;
             },
@@ -165,12 +200,35 @@
                 });
             },
             onReset(formName) {
-                this.$refs[formName].resetFields();
+                this.formData.isActive = false;
+                this.formData.sortOrder = 50;
+                this.formData.imgUrl = '';
+                // this.$refs[formName].resetFields();
             },
             _beforeHandleSuccess() {
                 this.isUploadingData = false;
                 this.visible = false;
-                this.$refs.form.resetFields();
+                // this.$refs.form.resetFields();
+                // this.onReset();
+            },
+            _batchDelete(ids) {
+                axios({
+                    method: 'post',
+                    url: '/api/banner/batchdel',
+                    data: {
+                        ids: ids
+                    }
+                }).then(res => {
+                    if (res.data.success) {
+                        this._getList();
+                        Message({
+                            message: res.data.msg,
+                            type: 'success'
+                        });
+                    }
+                }).catch(error => {
+                    console.log(error);
+                });
             },
             _editBanner() {
                 this.isUploadingData = true;
@@ -180,16 +238,14 @@
                     data: {
                         id: this.currentId,
                         src: this.formData.imgUrl,
-                        isAcitve: this.formData.isActive,
+                        isActive: this.formData.isActive ? 1 : 0,
                         sortOrder: this.formData.sortOrder
                     }
                 }).then(res => {
-                    // this.isUploadingData = false;
-                    // this.visible = false;
-                    // this.$refs.form.resetFields();
+                    // console.log(this.formData);
                     this._beforeHandleSuccess();
                     if (res.data.success) {
-                        this._getList();
+                        this._updateData(res.data.data);
                         Message({
                             message: res.data.msg,
                             type: 'success'
@@ -200,6 +256,12 @@
                     console.log(error);
                 });
             },
+            _updateData(data) {
+                data = this._normalize(data)[0];
+                // console.log(this.data);
+                let temp = this.data.find(item => item.id === data.id);
+                Object.assign(temp, data);
+            },
             _putBanner() {
                 this.isUploadingData = true;
                 axios({
@@ -207,7 +269,7 @@
                     url: '/api/banner/create',
                     data: {
                         src: this.formData.imgUrl,
-                        isAcitve: this.formData.isActive,
+                        isActive: this.formData.isActive ? 1 : 0,
                         sortOrder: this.formData.sortOrder
                     }
                 }).then(res => {
@@ -267,7 +329,8 @@
         components: {
             MTable,
             MToolBar,
-            MUpload
+            MUpload,
+            PopoverColumn
         }
     };
 </script>

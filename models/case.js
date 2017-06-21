@@ -1,8 +1,22 @@
 const {dbUtils} = require('../utils');
 const _ = require('lodash');
-const successCase = {
+const baseFactory = require('./base');
+
+const successCase = Object.assign(baseFactory('case', [
+    'id',
+    'src',
+    'image_size',
+    'link',
+    'desc',
+    'is_active',
+    'sort_order',
+    'title',
+    'content',
+    'created_date',
+    'update_date'
+]), {
     async getOneBig() {
-        console.log('case--1');
+        // console.log('case--1');
         let sql = 'SELECT ' +
                     '`id`, ' +
                     '`link`, ' +
@@ -20,7 +34,7 @@ const successCase = {
         return result;
     },
     async getFourSmall() {
-        console.log('case--2');
+        // console.log('case--2');
         let sql = 'SELECT ' +
                     '`id`, ' +
                     '`src`, '  +
@@ -35,21 +49,7 @@ const successCase = {
         if (!_.isArray(result)) return null;
         if (result.length !== 4) return null;
         return result;
-    },
-    async getLimitCasesSortByOneField(offset = 0, limit = 10, sort = 'sort_order', order = 'DESC') {
-        let subSql = 'SELECT * FROM `case` ORDER BY ' + sort + ' ' + order.toUpperCase();
-        // let limitSql = subSql + ' LIMIT ?, ?';
-        // let countSql = 'SELECT COUNT(*) as `count` FROM ('+ subSql +') t';
-
-        // let result = await Promise.all([
-        //     dbUtils.query(limitSql, [offset * limit * 1, limit * 1]),
-        //     dbUtils.query(countSql)
-        // ]).catch(error => console.log(error));
-        let result = await dbUtils.getListAndCount(subSql, offset, limit);
-
-        if (_.isArray(result) && result.length === 2) return result;
-        else return null;
     }
-}
 
+});
 module.exports = successCase;

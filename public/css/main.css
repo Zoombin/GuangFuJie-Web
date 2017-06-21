@@ -20,6 +20,16 @@ a {
     line-height: 1;
 }
 
+.more {
+    font-size: 20px;
+    line-height: 1.2;
+    margin: 42px 0 15px 0;
+}
+
+.more:hover {
+    cursor: pointer;
+}
+
 .m-navbar>.container>.navbar-header>.navbar-brand {
     padding: 0px 15px;
 }

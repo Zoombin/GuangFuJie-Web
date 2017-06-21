@@ -19,7 +19,13 @@ module.exports = {
         let order = data.order;
         let sort = data.sort;
 
-        let res = await contactUsModel.getLimitSortByOneField(offset, limit, sort, order);
+        let res = await contactUsModel.basePagination(
+            ['id', 'name', 'tel', 'address', 'area', 'msg', 'created_date', 'is_contact'],
+            offset,
+            limit,
+            sort,
+            order
+        );
 
         let bannerRes = res[0];
         let countRes = res[1];
@@ -29,5 +35,9 @@ module.exports = {
             total,
             rows: bannerRes
         };
+    },
+    async toggleContact(data = {}, id) {
+        let res = await contactUsModel.baseEdit(data, id);
+        return res ? res : null;
     }
 }

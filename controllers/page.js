@@ -28,7 +28,7 @@ module.exports = {
         ] = results;
         const about = frontEndIndex.about;
         const ftConfig = frontFooterConfig;
-
+        console.log(successCase);
         // ctx.body = results;
         ctx.body = frontView.compiledIndexFn({
             websitTitle: frontEndIndex.websitTitle,
@@ -58,5 +58,19 @@ module.exports = {
     // },
     async adminPage(ctx) {
         ctx.body = await renderAdminFile();
+    },
+    async newItemPage(ctx) {
+        let id = ctx.params.id;
+        let newsData = {};
+        let res = await newsService.getArticle(id);
+        if (res) {
+            newsData.content = res[0].content;
+        }
+
+        ctx.body = frontView.compiledNewsFn({
+            ftConfig: frontFooterConfig,
+            linkHrefs,
+            newsData
+        });
     }
 }

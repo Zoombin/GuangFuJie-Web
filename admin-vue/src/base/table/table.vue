@@ -6,6 +6,7 @@
             :fit="fit"
             :highlight-current-row="highLightCurrentRow"
             :default-sort="defaultSort"
+            @selection-change="selectionChange"
         >   
             <el-table-column v-if="showSelection" width="56" type="selection"></el-table-column>
             <el-table-column label="序号" width="100" type="index"></el-table-column>
@@ -85,13 +86,17 @@
             },
             editContent(index, row, column, store) {
                 this.$emit('editContent', index, row, column, store);
+            },
+            selectionChange(selection) {
+                // selection 是一个数组包含当前的勾选项
+                this.$emit('selectionChange', selection);
             }
         },
         components: {
             OperatorColumn
         },
         created() {
-            console.log(this.columns);
+            // console.log(this.columns);
         }
     };
 </script>
