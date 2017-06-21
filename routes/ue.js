@@ -2,7 +2,6 @@ const Router = require('koa-router');
 const Promise = require('bluebird');
 const Busboy = require('busboy');
 const fs = require('fs');
-const qn = require('qn');
 const path = require('path');
 const router = new Router();
 const qiniuUtils = require('../utils/qiniu-utils');
