@@ -26,9 +26,6 @@ module.exports = {
             session.isLogin = true;
             session.userName = userResult.username;
             session.userId = userResult.id;
-
-            // ctx.redirect('/admin');
-            // ctx.body = result;
         }
         ctx.body = result;
     }

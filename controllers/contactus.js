@@ -1,4 +1,5 @@
 const contactUsService = require('../services/contactus');
+const contactUsCodes = require('../codes/contactus');
 const _ = require('lodash');
 
 module.exports = {
@@ -46,8 +47,8 @@ module.exports = {
             let contactUsData = await contactUsService.getPagitionContactUsData({
                 offset: params.offset,
                 limit: params.limit,
-                order: params.order,
-                sort: params.sort
+                order: params.order || 'desc',
+                sort: params.sort || 'created_date'
             });
 
             result.success = true;
@@ -55,5 +56,34 @@ module.exports = {
             result.data = contactUsData;
         }
         ctx.body = result;
+    },
+    async toggleContact(ctx) {
+        let params = ctx.request.body;
+        let data = {};
+        let result = {
+            success: false,
+            msg: '',
+            data: null,
+            code: 0
+        };
+        if (!params.id) {
+            result.code = 'INVALID_PARAM';
+            result.msg = contactUsCodes.INVALID_PARAM;
+            return ctx.body = result;
+        }
+
+        if (!_.isUndefined(params.isContact)) data.is_contact = params.isContact;
+
+        let contactUsRes = await contactUsService.toggleContact(data, params.id);
+        if (!contactUsRes) {
+            result.code = 'INVALID_PARAM';
+            result.msg = contactUsCodes.INVALID_PARAM;
+        } else {
+            result.success = true;
+            result.msg = '操作成功';
+            result.data = contactUsRes;
+        }
+
+        return ctx.body = result;
     }
 }

@@ -80,18 +80,27 @@ block content
     
     div.m-news
         div.container
-            div.maintitle #{news.mainTitle}
+            div.clearfix
+                div.maintitle.pull-left #{news.mainTitle}
+                a.more.pull-right #{'更多资讯'}
             div.grayline
             div.row
                 each item in news.items
                     div.col-sm-6.m-news-item
                         div.row
                             div.col-sm-6
-                                a(href=item.link)
-                                    img(src=item.src, alt=news.defaultAlt)/
+                                if item.link
+                                    a(href=item.link)
+                                        img(src=item.src, alt=news.defaultAlt)/
+                                else
+                                    a(href='/news/' + item.id)
+                                        img(src=item.src, alt=news.defaultAlt)/
                             div.col-sm-6.m-news-text
                                 div.m-news-text__title
-                                    a(href=item.link) #{item.title}
+                                    if item.link
+                                        a(href=item.link) #{item.title}
+                                    else
+                                        a(href='/news/' + item.id) #{item.title}
                                 div.m-news-text__date #{item.date.split(' ')[0]}
 
     div.m-about

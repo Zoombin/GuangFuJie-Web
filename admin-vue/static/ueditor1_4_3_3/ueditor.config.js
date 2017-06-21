@@ -18,7 +18,7 @@
      * 因此，UEditor提供了针对不同页面的编辑器可单独配置的根路径，具体来说，在需要实例化编辑器的页面最顶部写上如下代码即可。当然，需要令此处的URL等于对应的配置。
      * window.UEDITOR_HOME_URL = "/xxxx/xxxx/";
      */
-    var URL = '/static/ueditor1_4_3_3/' || getUEBasePath();
+    var URL = '/admin/static/ueditor1_4_3_3/' || getUEBasePath();
 
     /**
      * 配置项主体。注意，此处所有涉及到路径的配置别遗漏URL变量。
@@ -63,7 +63,7 @@
         //,themePath:URL +"themes/"
 
         ,
-        zIndex: 900 //编辑器层级的基数,默认是900
+        zIndex: 3000 //编辑器层级的基数,默认是900
 
         //针对getAllHtml方法，会在对应的head标签中增加该编码设置。
         //,charset:"utf-8"
@@ -93,7 +93,7 @@
 
         //,initialFrameWidth:1000  //初始化编辑器宽度,默认1000
         ,
-        initialFrameHeight: 800 //初始化编辑器高度,默认320
+        initialFrameHeight: 400 //初始化编辑器高度,默认320
 
         //,readonly : false //编辑器初始化结束后,编辑区域是否是只读的，默认是false
 

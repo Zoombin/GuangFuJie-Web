@@ -1,7 +1,19 @@
 const {dbUtils} = require('../utils');
 const Promise = require('bluebird');
 const _  = require('lodash');
-const banner = {
+
+const baseFactory = require('./base');
+
+const banner = Object.assign(baseFactory('banner', [
+    'id',
+    'src',
+    'link',
+    'title',
+    'is_active',
+    'sort_order',
+    'created_date',
+    'update_date'
+]), {
     async getHomeBanners() {
         // console.log('banner');
         let sql = 'SELECT '+
@@ -17,23 +29,8 @@ const banner = {
         if (!_.isArray(result)) return null;
         // if (result.length !== 4) return null;
         return result;
-    },
-    async getLimitBannersSortByOneField(offset = 0, limit = 10, sort = 'sort_order', order = 'DESC') {
-        let subSql = 'SELECT * FROM `banner` ORDER BY ' + sort + ' ' + order.toUpperCase();
-        let result = await dbUtils.getListAndCount(subSql, offset, limit);
-
-        if (_.isArray(result) && result.length === 2) return result;
-        else return null;
-    },
-    async insertNewBanner(src = '', isActive = 1, sortOrder = 50) {
-        let result = await dbUtils.insertData(
-                ['banner'], 
-                ['src', 'is_active', 'sort_order'], 
-                [src, isActive, sortOrder]
-        );
-        if (_.isObject(result) && result.affectedRows === 1) return result;
-        else return null;
     }
-}
+});
+
 
 module.exports = banner;

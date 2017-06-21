@@ -1,14 +1,15 @@
 const bannerModel = require('../models/banner');
 const bannerData = require('../config/base').frontEndIndex.banner;
+const _ = require('lodash');
 module.exports = {
     /**
      * 首页banner部分数据
      * @return {object||null} banner数据
      */
     async getFourBannerData() {
-        console.log('执行banner');
+        // console.log('执行banner');
         let data = await bannerModel.getHomeBanners();
-        console.log(data);
+        // console.log(data);
         return data
             ? {
                 defaultAlt: bannerData.defaultAlt,
@@ -24,28 +25,44 @@ module.exports = {
         let offset = data.offset;
         let limit = data.limit;
         let order = data.order;
+        // console.log(order);
         let sort = data.sort;
+        // console.log(sort);
 
-        let res = await bannerModel.getLimitBannersSortByOneField(offset, limit, sort, order);
-
+        // let res = await bannerModel.getLimitBannersSortByOneField(offset, limit, sort, order);
+        let res = await bannerModel.basePagination(
+            ['id', 'src', 'is_active', 'sort_order', 'created_date'],
+            offset,
+            limit,
+            sort,
+            order
+        );
+        // let res = await bannerModel.basePagination(['id', 'src', 'link'])
+        // console.log(res);
         let bannerRes = res[0];
         let countRes = res[1];
         let total = countRes[0].count;
-
-        // bannerRes = bannerRes.map((value, index) => {
-        //     value.index = index + 1;
-        //     // value.is_active = value.is_active === 1 ? '是' : '否';
-        //     // value.src = '<a href='+ value.src +'>查看图片</a>';
-        //     return value;
-        // });
 
         return {
             total,
             rows: bannerRes
         };
     },
-    async insertBannerData({src, isActive, sortOrder}) {
-        let res = await bannerModel.insertNewBanner(src, isActive, sortOrder);
-        return res ? true : false;
+    async updateBanner(data = {}, id) {
+        // let res = await bannerModel.editBanner(data, id);
+        let res = await bannerModel.baseEdit(data, id);
+        return res ? res : null;
+    },
+    async insertBannerData(data = {}) {
+        // let res = await bannerModel.insertNewBanner(src, isActive, sortOrder);
+        let res = await bannerModel.baseInsert(data);
+        return res ? res : null;
+    },
+    async batchDelete(ids) {
+        // if (!_.isArray(ids)) return false;
+        // if (!ids.length) return false;
+        // let res = await bannerModel.batchDelete(ids);
+        let res = await bannerModel.baseDelete(ids);
+        return res ? res : null;
     }
 }

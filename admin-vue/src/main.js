@@ -5,8 +5,23 @@ import Vue from 'vue';
 import App from './App';
 import router from './router';
 // import VueQuillEditor from 'vue-quill-editor';
-
+import Cookies from 'js-cookie';
 // Vue.use(VueQuillEditor);
+
+router.beforeEach((to, from, next) => {
+    if (to.path === '/login') next();
+    else {
+        console.log(from.path);
+        console.log(to.path);
+        console.log(Cookies.get('islogin'));
+        if (!Cookies.get('islogin')) next('/login');
+        else next();
+    }
+    // if (from.path !== '/login') {
+    //     if (Cookies.get('islogin')) next();
+    //     else next('/login');
+    // }
+});
 
 import {
     Row,
@@ -27,13 +42,17 @@ import {
     Form,
     FormItem,
     Input,
+    Switch,
+    Radio,
+    RadioGroup,
     Option,
     DatePicker,
     Slider,
-    Switch,
     Pagination,
     Loading,
-    Dialog
+    Dialog,
+    Popover,
+    Tag
 } from 'element-ui';
 
 Vue.use(Row);
@@ -61,6 +80,10 @@ Vue.use(Switch);
 Vue.use(Pagination);
 Vue.use(Loading);
 Vue.use(Dialog);
+Vue.use(Popover);
+Vue.use(Tag);
+Vue.use(Radio);
+Vue.use(RadioGroup);
 
 
 // console.log(Message);

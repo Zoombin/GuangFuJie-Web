@@ -11,7 +11,12 @@ function compiledCaseFn(locals = {}) {
     return pug.compileFile(path.join(__dirname, '/pages/case.pug'))(locals);
 }
 
+function compiledNewsFn(locals = {}) {
+    return pug.compileFile(path.join(__dirname, '/pages/news.pug'))(locals);
+}
+
 module.exports = {
     compiledIndexFn,
-    compiledCaseFn
+    compiledCaseFn,
+    compiledNewsFn
 };

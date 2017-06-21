@@ -9,7 +9,7 @@ module.exports = {
      * @return {object||null} 返回对象
      */
     async getOneBigData() {
-        console.log('获取一张大图');
+        // console.log('获取一张大图');
         let data = await successCaseModel.getOneBig();
         return data;
     },
@@ -18,7 +18,7 @@ module.exports = {
      * @return {array||null} 返回数组
      */
     async twoRowSmallData() {
-        console.log('获取一张小图');
+        // console.log('获取一张小图');
         let data = await successCaseModel.getFourSmall();
         return data ? _.chunk(data, 2) : null;
     },
@@ -48,8 +48,29 @@ module.exports = {
         let limit = data.limit;
         let order = data.order;
         let sort = data.sort;
+        let search = data.search;
 
-        let res = await successCaseModel.getLimitCasesSortByOneField(offset, limit, sort, order);
+        let res = null;
+        // let res = await successCaseModel.getLimitCasesSortByOneField(offset, limit, sort, order);
+        if (!search) {
+            res = await successCaseModel.basePagination(
+                ['id', 'src', 'desc', 'image_size', 'is_active', 'sort_order', 'title', 'content', 'update_date'],
+                offset,
+                limit,
+                sort,
+                order
+            );
+        } else {
+            res = await successCaseModel.basePaginationWithSearch(
+                ['id', 'src', 'desc', 'image_size', 'is_active', 'sort_order', 'title', 'content', 'update_date'],
+                offset,
+                limit,
+                sort,
+                order,
+                ['title'],
+                search
+            )
+        }
 
         let caseRes = res[0];
         let countRes = res[1];
@@ -59,5 +80,17 @@ module.exports = {
             total,
             rows: caseRes
         };
+    },
+    async insertCase(data = {}) {
+        let res = await successCaseModel.baseInsert(data);
+        return res ? res : null;
+    },
+    async batchDelete(ids) {
+        let res = await successCaseModel.baseDelete(ids);
+        return res ? res : null;
+    },
+    async updateCase(data = {}, id) {
+        let res = await successCaseModel.baseEdit(data, id);
+        return res ? res : null;
     }
 }
