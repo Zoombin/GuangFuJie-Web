@@ -52,7 +52,9 @@ import {
     Loading,
     Dialog,
     Popover,
-    Tag
+    Tag,
+    Cascader,
+    Select
 } from 'element-ui';
 
 Vue.use(Row);
@@ -84,6 +86,8 @@ Vue.use(Popover);
 Vue.use(Tag);
 Vue.use(Radio);
 Vue.use(RadioGroup);
+Vue.use(Cascader);
+Vue.use(Select);
 
 
 // console.log(Message);

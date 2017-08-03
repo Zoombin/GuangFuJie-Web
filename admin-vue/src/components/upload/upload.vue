@@ -12,7 +12,7 @@
         >
             <img v-if="imageUrl" :src="imageUrl" :style="imgSty"/>
             <i v-else class="el-icon-plus" :style="iconSty"></i>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过1mb，尺寸 {{ size }}</div>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件{{ size ? '，且不超过1mb，尺寸' + size : '' }}</div>
         </el-upload>
     </div>
 </template>

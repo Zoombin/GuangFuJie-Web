@@ -254,3 +254,43 @@ export const newsColumns = [
         _custom: false
     }
 ];
+
+export const articlesColumns = [
+    {
+        label: '标题',
+        prop: 'title',
+        width: 'auto',
+        _custom: false
+    },
+    {
+        label: '地区',
+        prop: 'address',
+        width: 'auto',
+        _custom: false
+    },
+    {
+        label: '封面图片',
+        prop: 'imgSrc',
+        width: 'auto',
+        _custom: true,
+        _view: 'popover-column'
+    },
+    {
+        label: '类型',
+        prop: 'typeName',
+        width: 'auto',
+        _custom: false
+    },
+    {
+        label: '激活状态',
+        prop: 'activeState',
+        width: 'auto',
+        _custom: false
+    },
+    {
+        label: '更新日期',
+        prop: 'updateDate',
+        width: 'auto',
+        _custom: false
+    }
+];

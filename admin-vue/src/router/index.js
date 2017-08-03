@@ -9,6 +9,7 @@ import ServiceTable from 'components/tables/service-table';
 import TeamTable from 'components/tables/team-table';
 import ContactUsTable from 'components/tables/contactus-table';
 import NewsTable from 'components/tables/news-table';
+import ArticleTable from 'components/tables/article-table';
 import Login from 'components/login/login';
 
 Vue.use(Router);
@@ -46,6 +47,10 @@ export default new Router({
         {
             path: '/news',
             component: NewsTable
+        },
+        {
+            path: '/articles',
+            component: ArticleTable
         },
         {
             path: '/news/editor/:id',

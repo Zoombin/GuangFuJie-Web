@@ -12,6 +12,8 @@ const serviceCtr = require('../controllers/service');
 const contactUsCtr = require('../controllers/contactus');
 const teamCtr = require('../controllers/team');
 const newsCtr = require('../controllers/news');
+const articlesCtr = require('../controllers/articles');
+const addressCtr = require('../controllers/address');
 
 const dbUtils = require('../utils/db-utils');
 const {uploadPicture} = require('../utils/upload-utils');
@@ -54,6 +56,16 @@ router.post('/news/batchdel', newsCtr.batchDelete);
 
 router.get('/contactus/list', contactUsCtr.contactPagition);
 router.post('/contactus/toggle', contactUsCtr.toggleContact);
+
+router.get('/articles/list', articlesCtr.getList);
+router.get('/articles/typelist', articlesCtr.typelist);
+router.post('/articles/edit', articlesCtr.editArt);
+router.post('/articles/create', articlesCtr.newArt);
+
+router.get('/address/provincelist', addressCtr.provinceList);
+router.get('/address/citylist', addressCtr.cityList);
+router.get('/address/arealist', addressCtr.areList);
+
 
 router.get('/article', async (ctx) => {
     let type = ctx.query.type;

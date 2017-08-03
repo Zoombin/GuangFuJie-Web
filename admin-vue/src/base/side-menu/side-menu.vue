@@ -7,6 +7,7 @@
             <el-menu-item index="/team">团队</el-menu-item>
             <el-menu-item index="/case">施工案例</el-menu-item>
             <el-menu-item index="/news">资讯</el-menu-item>
+            <el-menu-item index="/articles">文章</el-menu-item>
         </el-menu>
     </div>
 </template>
@@ -32,6 +33,7 @@
                 if (path.indexOf('/team') !== -1) index = '/team';
                 if (path.indexOf('/contactus') !== -1) index = '/contactus';
                 if (path.indexOf('/news') !== -1) index = '/news';
+                if (path.indexOf('/articles') !== -1) index = '/articles';
                 this.currentIndex = index;
             }
         },

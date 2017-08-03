@@ -1,4 +1,4 @@
-const {database} = require('../config');
+const {database, databasetwo} = require('../config');
 const Promise = require('bluebird');
 const _ = require('lodash');
 const mysql = require('mysql');
@@ -12,9 +12,35 @@ const pool = mysql.createPool({
     dateStrings: true
 });
 
+const gfjAdminPool = mysql.createPool({
+    host: databasetwo.host,
+    user: databasetwo.user,
+    port: databasetwo.port,
+    password: databasetwo.password,
+    database: databasetwo.db,
+    dateStrings: true
+});
+
 let query = function(sql, param = []) {
     return new Promise((resolve, reject) => {
         pool.getConnection((error, connection) => {
+            if (error) resolve(err);
+            else {
+                connection.query(sql, param, (err, rows) => {
+                    console.log(sql);
+                    if (err) reject(err);
+                    else resolve(rows);
+                    connection.release();
+                });
+            }
+        });
+    });
+};
+
+
+let gfjQuery = function(sql, param = []) {
+    return new Promise((resolve, reject) => {
+        gfjAdminPool.getConnection((error, connection) => {
             if (error) resolve(err);
             else {
                 connection.query(sql, param, (err, rows) => {
@@ -122,6 +148,7 @@ let getListAndCountWithSearch = function(cols, tbName, sort, order, offset, limi
 
 module.exports = {
     query,
+    gfjQuery,
     findAllDataById,
     findPartDataById,
     batchDeleteByIds,

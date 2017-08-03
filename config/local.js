@@ -7,6 +7,13 @@ module.exports = {
         password: 'wfh_linux',
         db: 'website-gfj'
     },
+    databasetwo: {
+        port: 3306,
+        host: 'localhost',
+        user: 'root',
+        password: 'wfh_linux',
+        db: 'guangfujie'
+    },
     qiniu: {
         bucket: 'guangfujie',
         accessKey: 'zrAvv0stUaPwrAYiaSuVgvsUSgajrFDcJoIn62Vp',
