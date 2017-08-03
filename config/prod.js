@@ -7,6 +7,13 @@ module.exports = {
         password: 'Dsh12345',
         db: 'website-gfj'
     },
+    databasetwo: {
+        port: 3306,
+        host: '112.124.98.9',
+        user: 'root',
+        password: 'Dsh12345',
+        db: 'guangfujie_prod'
+    },
     qiniu: {
         bucket: 'guangfujie',
         accessKey: 'zrAvv0stUaPwrAYiaSuVgvsUSgajrFDcJoIn62Vp',
