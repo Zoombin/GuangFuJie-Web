@@ -549,12 +549,14 @@
                     // item.image_size = item.image_size === 1 ? '大图' : '小图';
                     // item.update_date = item.created_date.split(' ')[0];
                     // console.log(item);
+                    console.log(item);
                     return new Article({
                         id: item.id,
                         title: item.title,
                         // desc: item.desc,
                         imgSrc: item.image,
                         // imgSize: item.image_size,
+                        address: item.addName || '全国',
                         activeState: item.is_active,
                         updateDate: item.update_date,
                         content: item.content === null ? '' : item.content,
