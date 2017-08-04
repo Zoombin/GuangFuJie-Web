@@ -177,6 +177,7 @@ module.exports = {
         try {
             response = await gfjQuery(sql, []);
         } catch (error) {
+            console.log(error);
             result.msg = '查询出错';
         }
 
@@ -191,6 +192,7 @@ module.exports = {
     async editArt(ctx) {
         let params = ctx.request.body;
         let { id, src, isActive, title, type, province, city, area, content } = params;
+        
 
         let sql = 'UPDATE `gfj_articles` SET title = ? , image = ?, type_id = ? , is_active = ?, province = ?, city = ?, area = ?, content = ?, update_date = NOW() WHERE id = ?';
 
@@ -202,8 +204,9 @@ module.exports = {
         };
         let response = null;
         try {
-            response = await gfjQuery(sql, [title, src, type, isActive, province, city, area, content]);
+            response = await gfjQuery(sql, [title, src, type, isActive, province, city, area, content, id]);
         } catch (error) {
+            console.log(error);
             result.msg = '查询出错';
         }
 
