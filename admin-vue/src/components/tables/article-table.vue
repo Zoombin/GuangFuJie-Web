@@ -131,7 +131,7 @@
                     imgSrc: '',
                     title: '',
                     type: '',
-                    address: [],
+                    address: ['0', '0', '0'],
                     isActive: false,
                     content: ''
                 },
@@ -249,71 +249,94 @@
                 this.domainUrl = domainUrl;
             },
             handleAddressItemChange(valary) {
-                let provinceId = valary[0];
+                let provinceId = parseInt(valary[0], 10);
                 let provinceIdx = this.addressOptions.findIndex(function(el, index) {
-                    return parseInt(el.value, 10) === parseInt(provinceId, 10);
+                    return parseInt(el.value, 10) === provinceId;
                 });
                 if (valary.length === 1) {
-                    // 点击了省份
-                    // this.addressOptions.
-                    if (this.addressOptions[provinceIdx].children.length === 0) {
-                        axios({
-                            method: 'get',
-                            url: '/api/address/citylist',
-                            params: {
-                                provinceId
+                    if (provinceId === 0) {
+                        this.addressOptions[provinceIdx].children = [
+                            {
+                                value: '0',
+                                label: '--市--',
+                                children: []
                             }
-                        }).then(res => {
-                            if (res.data.success) {
-                                this.addressOptions[provinceIdx].children = res.data.data.map((el, index) => {
-                                    return {
-                                        value: el.city_id,
-                                        label: el.name,
+                        ];
+                    } else {
+                        // 点击了省份
+                        // this.addressOptions.
+                        if (this.addressOptions[provinceIdx].children.length === 0) {
+                            axios({
+                                method: 'get',
+                                url: '/api/address/citylist',
+                                params: {
+                                    provinceId
+                                }
+                            }).then(res => {
+                                if (res.data.success) {
+                                    this.addressOptions[provinceIdx].children = [{
+                                        value: '0',
+                                        label: '--市--',
                                         children: []
-                                    };
-                                });
-                            } else {
-                                Message({
-                                    message: res.data.msg,
-                                    type: 'warning'
-                                });
-                            }
-                        }).catch(error => {
-                            console.log(error);
-                            // this.loading = false;
-                        });
+                                    }].concat(res.data.data.map((el, index) => {
+                                        return {
+                                            value: el.city_id,
+                                            label: el.name,
+                                            children: []
+                                        };
+                                    }));
+                                } else {
+                                    Message({
+                                        message: res.data.msg,
+                                        type: 'warning'
+                                    });
+                                }
+                            }).catch(error => {
+                                console.log(error);
+                                // this.loading = false;
+                            });
+                        }
                     }
                 } else if (valary.length === 2) {
-                    let cityId = valary[1];
+                    let cityId = parseInt(valary[1], 10);
                     let cityIdx = this.addressOptions[provinceIdx].children.findIndex(function(el, index) {
-                        return parseInt(el.value, 10) === parseInt(cityId, 10);
+                        return parseInt(el.value, 10) === cityId;
                     });
-
-                    if (this.addressOptions[provinceIdx].children[cityIdx].children.length === 0) {
-                        axios({
-                            method: 'get',
-                            url: '/api/address/arealist',
-                            params: {
-                                cityId
-                            }
-                        }).then(res => {
-                            if (res.data.success) {
-                                this.addressOptions[provinceIdx].children[cityIdx].children = res.data.data.map((el, index) => {
-                                    return {
-                                        value: el.area_id,
-                                        label: el.name
-                                    };
-                                });
-                            } else {
-                                Message({
-                                    message: res.data.msg,
-                                    type: 'warning'
-                                });
-                            }
-                        }).catch(error => {
-                            console.log(error);
-                            // this.loading = false;
-                        });
+                    if (cityId === 0) {
+                        this.addressOptions[provinceIdx].children[cityIdx].children = [{
+                            value: '0',
+                            label: '--区域--'
+                        }];
+                    } else {
+                        if (this.addressOptions[provinceIdx].children[cityIdx].children.length === 0) {
+                            axios({
+                                method: 'get',
+                                url: '/api/address/arealist',
+                                params: {
+                                    cityId
+                                }
+                            }).then(res => {
+                                if (res.data.success) {
+                                    this.addressOptions[provinceIdx].children[cityIdx].children = [{
+                                        value: '0',
+                                        label: '--区域--'
+                                    }].concat(res.data.data.map((el, index) => {
+                                        return {
+                                            value: el.area_id,
+                                            label: el.name
+                                        };
+                                    }));
+                                } else {
+                                    Message({
+                                        message: res.data.msg,
+                                        type: 'warning'
+                                    });
+                                }
+                            }).catch(error => {
+                                console.log(error);
+                                // this.loading = false;
+                            });
+                        }
                     }
                 }
             },
@@ -498,18 +521,16 @@
                         this.addressOptions = [{
                             value: '0',
                             label: '--省--',
-                            children: [
-                                {
-                                    value: '0',
-                                    label: '--市--',
-                                    children: [
-                                        {
-                                            value: '0',
-                                            label: '--区域--'
-                                        }
-                                    ]
-                                }
-                            ]
+                            children: [{
+                                value: '0',
+                                label: '--市--',
+                                children: [
+                                    {
+                                        value: '0',
+                                        label: '--区域--'
+                                    }
+                                ]
+                            }]
                         }].concat(temp);
                     } else {
                         Message({
