@@ -197,7 +197,7 @@
             },
             del(index, row, col, store) {
                 // console.log(row.id);
-                this._batchDelete(row.id);
+                this._batchDelete([row.id]);
             },
             // editContent(index, row, col, store) {
             //     // console.log(row.id);

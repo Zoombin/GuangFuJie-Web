@@ -37,6 +37,7 @@
 // const http = require('http');
 const Promise = require('bluebird');
 const { gfjQuery } = require('../utils/db-utils');
+const _ = require('lodash');
 // function _getList(offset, limit) {
 //     let options = {
 //         // protocol: 'http:',
@@ -139,7 +140,7 @@ module.exports = {
             data: null,
             code: 0
         }
-
+        
         if (_.isArray(ids) && ids.length > 0) {
             let array = new Array(ids.length);
             array.fill('?');

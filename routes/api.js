@@ -61,6 +61,7 @@ router.get('/articles/list', articlesCtr.getList);
 router.get('/articles/typelist', articlesCtr.typelist);
 router.post('/articles/edit', articlesCtr.editArt);
 router.post('/articles/create', articlesCtr.newArt);
+router.post('/articles/batchdel', articlesCtr.batchDelete);
 
 router.get('/address/provincelist', addressCtr.provinceList);
 router.get('/address/citylist', addressCtr.cityList);
