@@ -27,7 +27,7 @@ let query = function(sql, param = []) {
             if (error) resolve(err);
             else {
                 connection.query(sql, param, (err, rows) => {
-                    console.log(sql);
+                    // console.log(sql);
                     if (err) reject(err);
                     else resolve(rows);
                     connection.release();
@@ -44,7 +44,7 @@ let gfjQuery = function(sql, param = []) {
             if (error) resolve(err);
             else {
                 connection.query(sql, param, (err, rows) => {
-                    console.log(sql);
+                    // console.log(sql);
                     if (err) reject(err);
                     else resolve(rows);
                     connection.release();

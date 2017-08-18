@@ -110,6 +110,7 @@ module.exports = {
                 gfjQuery(countSql, [project, ...param])
             ]);
         } catch (error) {
+            console.log(error);
             result.msg = '查询出错'
         }
 
@@ -119,7 +120,7 @@ module.exports = {
             let articlesRes = response[0];
             let countRes = response[1];
             let total = countRes[0].count;
-            console.log('wenzhang' + total);
+            // console.log('wenzhang' + total);
 
             result.success = true;
             result.msg = '操作成功';
