@@ -9,7 +9,7 @@ module.exports = {
             data: null,
             code: 0
         };
-        let sql = 'SELECT * FROM  `gfj_province`';
+        let sql = 'SELECT * FROM  `gfj_province_v2`';
         let response = null;
         try {
             response = await gfjQuery(sql, []);
@@ -33,7 +33,7 @@ module.exports = {
             data: null,
             code: 0
         };
-        let sql = 'SELECT * FROM `gfj_city` WHERE `father_id` = ?';
+        let sql = 'SELECT * FROM `gfj_city_v2` WHERE `father_id` = ?';
         let response = null;
         try {
             response = await gfjQuery(sql, [provinceId]);
@@ -56,7 +56,7 @@ module.exports = {
             data: null,
             code: 0
         };
-        let sql = 'SELECT * FROM `gfj_area` WHERE `father_id` = ?';
+        let sql = 'SELECT * FROM `gfj_area_v2` WHERE `father_id` = ?';
         let response = null;
         try {
             response = await gfjQuery(sql, [cityId]);

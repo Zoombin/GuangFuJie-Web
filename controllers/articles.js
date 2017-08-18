@@ -87,11 +87,11 @@ module.exports = {
             'FROM `gfj_articles` AS a ' +
             'LEFT JOIN `gfj_articles_type` AS at ' +
             'ON a.type_id = at.id ' +
-            'LEFT JOIN `gfj_province` AS p '+
+            'LEFT JOIN `gfj_province_v2` AS p '+
             'ON a.province = p.province_id '+
-            'LEFT JOIN `gfj_city` AS c '+
+            'LEFT JOIN `gfj_city_v2` AS c '+
             'ON a.city = c.city_id '+
-            'LEFT JOIN `gfj_area` as ar '+
+            'LEFT JOIN `gfj_area_v2` as ar '+
             'ON a.area = ar.area_id '+
             'WHERE a.is_active = 1 AND a.project = ? ';
         
@@ -219,11 +219,11 @@ module.exports = {
             'FROM `gfj_articles` AS a ' +
             'LEFT JOIN `gfj_articles_type` AS at ' +
             'ON a.type_id = at.id ' +
-            'LEFT JOIN `gfj_province` AS p '+
+            'LEFT JOIN `gfj_province_v2` AS p '+
             'ON a.province = p.province_id '+
-            'LEFT JOIN `gfj_city` AS c '+
+            'LEFT JOIN `gfj_city_v2` AS c '+
             'ON a.city = c.city_id '+
-            'LEFT JOIN `gfj_area` as ar '+
+            'LEFT JOIN `gfj_area_v2` as ar '+
             'ON a.area = ar.area_id '+
             'WHERE a.id = ?';
             let res = null;
