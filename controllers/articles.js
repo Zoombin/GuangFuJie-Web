@@ -69,7 +69,7 @@ const _ = require('lodash');
 // }
 
 const _updateLatIng = async function (artId) {
-    let sql = 'SELECT * FROM `gfj_articels` WHERE id = ?';
+    let sql = 'SELECT * FROM `gfj_articles` WHERE id = ?';
 
     let artOneRecord = await gfjQuery(sql, [artId]);
 
@@ -105,6 +105,7 @@ const _updateLatIng = async function (artId) {
         sql = 'UPDATE gfj_articles SET lat=0,lng=0 WHERE id = ?';
         params = [artId];
     }
+
 
     return gfjQuery(sql, params);
 }
@@ -300,14 +301,12 @@ module.exports = {
         let response = null;
         try {
             response = await gfjQuery(sql, [title, src, type, isActive, province, city, area, content]);
-            if (response.insertId) {
-                await _updateLatIng(id);
-            }
         } catch (error) {
             result.msg = '查询出错';
         }
 
         if (response) {
+            await _updateLatIng(response.insertId);
             result.success = true;
             result.msg = '操作成功';
             result.data = response;

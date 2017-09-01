@@ -9,10 +9,10 @@ module.exports = {
     },
     databasetwo: {
         port: 3306,
-        host: 'localhost',
+        host: '112.124.98.9',
         user: 'root',
-        password: 'wfh_linux',
-        db: 'guangfujie'
+        password: 'Dsh12345',
+        db: 'guangfujie_qa'
     },
     qiniu: {
         bucket: 'guangfujie',
