@@ -68,6 +68,47 @@ const _ = require('lodash');
 //     });
 // }
 
+const _updateLatIng = async function (artId) {
+    let sql = 'SELECT * FROM `gfj_articels` WHERE id = ?';
+
+    let artOneRecord = await gfjQuery(sql, [artId]);
+
+    let {province, city, area} = artOneRecord[0];
+
+    sql = '';
+    let promise = null;
+    let params = [];
+
+    if (area != 0) {
+        sql='SELECT lat,lng FROM gfj_area_v2 WHERE area_id=' + area;
+        params = [area];
+    } else {
+        if (city != 0) {
+            sql='SELECT lat,lng FROM gfj_city_v2 WHERE city_id=' + city;
+            params = [city];
+        } else {
+            if (province != 0) {
+                sql='SELECT lat,lng FROM gfj_province_v2 WHERE province_id=' + province;
+                params = [province];
+            }
+        }
+    }
+
+
+    if (params.length > 0) {
+        let latLngOneRecord = await gfjQuery(sql, params);
+        let {lat, lng} = latLngOneRecord[0];
+
+        sql = 'UPDATE gfj_articles SET lat=?,lng=? WHERE id = ?';
+        params = [lat, lng, artId];
+    } else {
+        sql = 'UPDATE gfj_articles SET lat=0,lng=0 WHERE id = ?';
+        params = [artId];
+    }
+
+    return gfjQuery(sql, params);
+}
+
 module.exports = {
     async getList(ctx) {
         let params = ctx.query;
@@ -228,6 +269,7 @@ module.exports = {
             'WHERE a.id = ?';
             let res = null;
             try {
+                await _updateLatIng(id);
                 res = await gfjQuery(sql, [id]);
             } catch (error) {
                 result.msg = '查询出错';
@@ -258,6 +300,9 @@ module.exports = {
         let response = null;
         try {
             response = await gfjQuery(sql, [title, src, type, isActive, province, city, area, content]);
+            if (response.insertId) {
+                await _updateLatIng(id);
+            }
         } catch (error) {
             result.msg = '查询出错';
         }
