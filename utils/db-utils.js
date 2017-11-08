@@ -2,7 +2,7 @@ const {database, databasetwo} = require('../config');
 const Promise = require('bluebird');
 const _ = require('lodash');
 const mysql = require('mysql');
-
+console.log(database);
 const pool = mysql.createPool({
     host: database.host,
     user: database.user,
