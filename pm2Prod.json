@@ -1,0 +1,9 @@
+[{
+  "name"        : "GuangFuJieWeb_PROD",
+  "script"      : "app.js",
+  "error_file"  : "./log_prod_error.log",
+  "out_file"    : "./log_prod_out.log",
+  "env": {
+      "NODE_ENV": "production"
+  }
+}]

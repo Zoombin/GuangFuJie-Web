@@ -1,11 +1,11 @@
 module.exports = {
-    port: 80,
+    port: 8016,
     database: {
         port: 3306,
-        host: 'localhost',
+        host: 'rm-bp197890698c2p809o.mysql.rds.aliyuncs.com',
         user: 'root',
         password: 'Dsh12345',
-        db: 'website-gfj'
+        db: 'guangfujie2_prod'
     },
     databasetwo: {
         port: 3306,
