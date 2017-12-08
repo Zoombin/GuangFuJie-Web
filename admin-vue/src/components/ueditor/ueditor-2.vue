@@ -30,12 +30,16 @@
                 //         });
                 //     }
                 // });
-                editorInstance.addListener('contentchange', function() {
+                // editorInstance.addListener('contentchange', function() {
                     // _self.content = editorInstance.getContent();
-                    console.log('change');
+                    // console.log('change');
                     // console.log(editorInstance.getContent());
-                    _self.$emit('contentchange', editorInstance.getContent());
-                });
+                    // _self.$emit('contentchange', editorInstance.getContent());
+
+                // });
+            },
+            getContent() {
+                return this.editor.getContent();
             }
         },
         watch: {

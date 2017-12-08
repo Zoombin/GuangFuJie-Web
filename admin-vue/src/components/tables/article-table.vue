@@ -88,7 +88,7 @@
                     <el-slider v-model="formData.sortOrder"></el-slider>
                 </el-form-item> -->
                 <el-form-item label="文章">
-                    <ueditor :content="formData.content" @contentchange="handleContentChange"></ueditor>
+                    <ueditor ref="ueditor" :content="formData.content"></ueditor>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="onSubmit('form')" :loading="isUploadingData">{{ submitText }}</el-button>
@@ -345,6 +345,8 @@
             },
             onSubmit(formName) {
                 var _self = this;
+                let content = this.$refs.ueditor.getContent();
+                this.formData.content = content;
                 this.$refs[formName].validate(function(valid) {
                     if (valid) {
                         if (_self.isCreate) _self._putArticle();
