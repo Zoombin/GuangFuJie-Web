@@ -187,10 +187,10 @@
                 this.formData.title = row.title;
                 // this.formData.desc = row.desc;
                 // this.formData.link = row.link;
-                this.$nextTick(() => {
-                    this.formData.content = row.content;
-                });
-                // this.formData.content = row.content;
+                // this.$nextTick(() => {
+                //     this.formData.content = row.content;
+                // });
+                this.formData.content = row.content;
                 this.formData.address = [row.provinceId, row.cityId, row.areaId];
                 this.formData.type = row.typeId;
 

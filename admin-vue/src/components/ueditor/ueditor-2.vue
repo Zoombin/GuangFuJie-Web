@@ -38,11 +38,11 @@
                 });
             }
         },
-        // watch: {
-        //     content() {
-        //         this.editor.setContent(this.content);
-        //     }
-        // },
+        watch: {
+            content() {
+                this.editor.setContent(this.content);
+            }
+        },
         components: {
             VueEditor
         }
