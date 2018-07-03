@@ -9,7 +9,7 @@
     "server:local": "cross-env NODE_ENV=local nodemon app.js",
     "server:dev": "cross-env NODE_ENV=develop nodemon app.js",
     "server:prod": "cross-env NODE_ENV=production node app.js",
-    "pm2:prod": "cross-env NODE_ENV=production pm2 start app.js",
+    "pm2:prod": "pm2 start pm2Prod.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
